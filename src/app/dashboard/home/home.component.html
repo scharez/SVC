@@ -16,7 +16,7 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <div>Card Content Here</div>
+          <app-voting-results *ngIf="card.title === 'Stimmenverteilung'"></app-voting-results>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

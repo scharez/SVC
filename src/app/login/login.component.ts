@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
           break;
 
         case 'Teacher':
-          this.router.navigate(['election']);
+          this.router.navigate(['wahl']);
           break;
 
         case 'Candidates':

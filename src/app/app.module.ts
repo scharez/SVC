@@ -14,6 +14,8 @@ import {MaterialModule} from './material/material.module';
 import { ElectionComponent } from './election/election.component';
 import {HttpService} from './_services/http.service';
 import {HttpClientModule} from '@angular/common/http';
+import {AuthGuard} from './_guard/auth.guard';
+import { VotingResultsComponent } from './dashboard/home/voting-results/voting-results.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import {HttpClientModule} from '@angular/common/http';
     HomeComponent,
     WahlComponent,
     LoginComponent,
-    ElectionComponent
+    ElectionComponent,
+    VotingResultsComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,7 @@ import {HttpClientModule} from '@angular/common/http';
     GoogleChartsModule,
     MaterialModule
   ],
-  providers: [HttpService],
+  providers: [HttpService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
