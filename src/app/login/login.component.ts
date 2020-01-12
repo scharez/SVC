@@ -30,20 +30,20 @@ export class LoginComponent implements OnInit {
 
     if (this.response.statusCode === 401) {
       console.log(this.response.message);
-    } else if(this.response.statusCode === 503) {
+    } else if (this.response.statusCode === 503) {
       console.log(this.response.message);
     } else {
         this.user.username = this.response.username;
         this.user.role = this.response.role;
         this.user.token = this.response.token;
 
-        localStorage.setItem("user", JSON.stringify(this.user));
+        localStorage.setItem('user', JSON.stringify(this.user));
 
-      switch (this.user.role) {
+        switch (this.user.role) {
 
         case 'Students':
-          //this.router.navigate(['info']);
-          alert("Student")
+          // this.router.navigate(['info']);
+          alert('Student');
           break;
 
         case 'Teacher':
@@ -51,12 +51,14 @@ export class LoginComponent implements OnInit {
           break;
 
         case 'Candidates':
-          //this.router.navigate(['info']);
-          alert("Candidate")
+          // this.router.navigate(['info']);
+          alert('Candidate');
           break;
 
         case 'ADMIN':
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['dashboard']).then(r =>
+            alert(r)
+          );
           break;
       }
     }

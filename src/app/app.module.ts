@@ -15,7 +15,9 @@ import { ElectionComponent } from './election/election.component';
 import {HttpService} from './_services/http.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthGuard} from './_guard/auth.guard';
-import { VotingResultsComponent } from './dashboard/home/voting-results/voting-results.component';
+import { VotingresultsComponent } from './dashboard/home/voting-results/voting-results.component';
+import { CandidateComponent } from './dashboard/candidate/candidate.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { VotingResultsComponent } from './dashboard/home/voting-results/voting-r
     WahlComponent,
     LoginComponent,
     ElectionComponent,
-    VotingResultsComponent
+    VotingresultsComponent,
+    CandidateComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { VotingResultsComponent } from './dashboard/home/voting-results/voting-r
     BrowserAnimationsModule,
     LayoutModule,
     GoogleChartsModule,
-    MaterialModule
+    MaterialModule,
+    MatDatepickerModule
   ],
   providers: [HttpService, AuthGuard],
   bootstrap: [AppComponent]
