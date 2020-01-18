@@ -18,6 +18,9 @@ import {AuthGuard} from './_guard/auth.guard';
 import { VotingresultsComponent } from './dashboard/home/voting-results/voting-results.component';
 import { CandidateComponent } from './dashboard/candidate/candidate.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { UploadCsvComponent } from './dashboard/home/upload-csv/upload-csv.component';
+import { ElectedClassesComponent } from './dashboard/home/elected-classes/elected-classes.component';
+import { ElectSettingsComponent } from './dashboard/home/elect-settings/elect-settings.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     LoginComponent,
     ElectionComponent,
     VotingresultsComponent,
-    CandidateComponent
+    CandidateComponent,
+    UploadCsvComponent,
+    ElectedClassesComponent,
+    ElectSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,8 +43,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     BrowserAnimationsModule,
     LayoutModule,
     GoogleChartsModule,
-    MaterialModule,
-    MatDatepickerModule
+    MaterialModule
   ],
   providers: [HttpService, AuthGuard],
   bootstrap: [AppComponent]

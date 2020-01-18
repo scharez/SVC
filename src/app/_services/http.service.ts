@@ -6,8 +6,9 @@ import {LoginDTO} from '../_models/loginDTO';
   providedIn: 'root'
 })
 export class HttpService {
+
     getSchoolClassResults(object: { id: string; score: number; date: string; electionType: string; }): any {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 
   constructor(private http: HttpClient) { }
@@ -34,21 +35,28 @@ export class HttpService {
     return this.http.post('http://localhost:8080/rest/sv/persistCVs');
   }
 
+  */
+
   endElection() {
-    this.http.post('http://localhost:8080/rest/sv/endElection');
+    this.http.post('http://localhost:8080/rest/sv/endElection', null);
   }
+
+  /*
 
   getSchoolClassResults(myRequest: VotingResultPunkte) {
     return this.http.get('http://localhost:8080/rest/sv/getSchoolClassResults');
   }
 
+   */
+
   beginElection() {
-    this.http.post('http://localhost:8080/rest/sv/startElection');
+    this.http.post('http://localhost:8080/rest/sv/startElection', null);
   }
 
   endElectionTeacher() {
-    this.http.post('http://localhost:8080/rest/sv/endElectionTeacher');
+    this.http.post('http://localhost:8080/rest/sv/endElectionTeacher', null);
   }
+
 
   postFile(file: File) {
     const formData: FormData = new FormData();
@@ -56,17 +64,19 @@ export class HttpService {
     return this.http.post('http://localhost:8080/rest/sv/uploadCSV', formData);
   }
 
+
   deleteClass(className: string) {
-    return this.http.post('http://localhost:8080/rest/sv/deleteClass');
+    return this.http.post('http://localhost:8080/rest/sv/deleteClass', className);
   }
-*/
   newElection(json: string) {
     this.http.post('http://localhost:8080/rest/sv/createElection', json);
   }
-/*
+
   getFinishedClasses() {
     return this.http.get('http://localhost:8080/rest/sv/getFinishedClasses');
   }
+
+  /*
 
   getVotingClasses() {
     return this.http.get('http://localhost:8080/rest/sv/getVotingClasses');

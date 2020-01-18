@@ -13,18 +13,18 @@ export class HomeComponent {
     map(({ matches }) => {
       if (matches) {
         return [
-          { title: 'Stimmenverteilung', cols: 1, rows: 1 },
-          { title: 'Card 2', cols: 1, rows: 1 },
-          { title: 'Card 3', cols: 1, rows: 1 },
-          { title: 'Card 4', cols: 1, rows: 1 }
+          { title: 'Stimmenverteilung', cols: 3, rows: 1 },
+          { title: 'Klassen \n [Ergebnis gewählt]', cols: 1, rows: 1 },
+          { title: 'Wahleinstellungen', cols: 1, rows: 1 },
+          { title: 'Klassen Hinzufügen', cols: 1, rows: 1 }
         ];
       }
 
       return [
-        { title: 'Stimmenverteilung', cols: 2, rows: 1 },
-        { title: 'Card 2', cols: 1, rows: 1 },
-        { title: 'Card 3', cols: 1, rows: 2 },
-        { title: 'Card 4', cols: 1, rows: 1 }
+        { title: 'Stimmenverteilung', cols: 3, rows: 1 },
+        { title: 'Klassen \n [Ergebnis gewählt]', cols: 1, rows: 1 },
+        { title: 'Wahleinstellungen', cols: 1, rows: 1 },
+        { title: 'Klassen Hinzufügen', cols: 1, rows: 1 }
       ];
     })
   );

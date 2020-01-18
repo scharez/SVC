@@ -27,7 +27,7 @@ export class WahlComponent implements OnInit {
 
     console.log(json);
 
-    // this.httpService.newElection(json);
+    this.httpService.newElection(json);
   }
 
   runOff() {
