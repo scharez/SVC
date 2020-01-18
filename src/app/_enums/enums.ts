@@ -1,0 +1,16 @@
+
+/* Enums */
+
+enum Electiontype {
+  SCHULSPRECHER,
+  ABTEILUNGSSPRECHER,
+  STICHWAHL_SCHULSPRECHER,
+  STICHWAHL_ABTEILUNGSSPRECHER
+}
+
+enum Electionstate {
+  NEW,
+  RUNNING,
+  STOPPED,
+  ENDED
+}
