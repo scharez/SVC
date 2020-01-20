@@ -3,6 +3,8 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {LoginComponent} from '../login/login.component';
+import {ElectionComponent} from '../election/election.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,5 +23,9 @@ export class DashboardComponent {
 
   logout() {
     this.router.navigate(['login']);
+  }
+
+  electionHop() {
+    this.router.navigate(['./election']);
   }
 }
