@@ -1,3 +1,12 @@
+<mat-toolbar color="primary" *ngIf="showToolBar">
+  <mat-toolbar-row>
+    <img src="../../assets/htl-logo.png" id="htl_logo">
+    <a>Student's Vote</a>
+    <span class="fill-remaining-space"></span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
 <mat-card class="example-card">
   <mat-card-header>
     <mat-card-title>Login</mat-card-title>
@@ -13,10 +22,14 @@
           </td>
         </tr>
         <tr>
-          <td><mat-form-field class="example-full-width">
-            <input matInput placeholder="Password" type="password" name="password" required [(ngModel)]="this.loginDTO.password">
-          </mat-form-field></td>
-        </tr></table>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Password" type="password" name="password" required
+                     [(ngModel)]="this.loginDTO.password">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
     </form>
     <!-- <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner> -->
   </mat-card-content>
