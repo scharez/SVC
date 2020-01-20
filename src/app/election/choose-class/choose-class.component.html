@@ -1,0 +1,15 @@
+<div>
+  <div mat-dialog-content>
+    <mat-form-field class="alignData">
+      <mat-select required placeholder="Klasse" [(ngModel)]="sClass">
+        <mat-option required *ngFor="let class of classes" [value]=class>
+          {{class}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Abbrechen</button>
+    <button mat-button (click)="onClick()" [mat-dialog-close]="classes " cdkFocusInitial>Weiter</button>
+  </div>
+</div>

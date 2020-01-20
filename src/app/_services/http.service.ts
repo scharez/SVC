@@ -1,13 +1,29 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoginDTO} from '../_models/loginDTO';
+import {Punkte} from '../_entities/entities';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
+    createCandidature(): any {
+      throw new Error('Method not implemented.');
+    }
+    endElection(): any {
+        throw new Error('Method not implemented.');
+    }
+    instanceCVs(myClass: string): any {
+        throw new Error('Method not implemented.');
+    }
+    sendPoints(punkteS: Punkte[]): any {
+        throw new Error('Method not implemented.');
+    }
+    getCandidatures() {
+      return this.http.get('http://localhost:8080/rest/sv/getCandidatures');
+    }
     getSchoolClassResults(object: { id: string; score: number; date: string; electionType: string; }): any {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 
   constructor(private http: HttpClient) { }
@@ -67,11 +83,11 @@ export class HttpService {
   getFinishedClasses() {
     return this.http.get('http://localhost:8080/rest/sv/getFinishedClasses');
   }
-
+*/
   getVotingClasses() {
     return this.http.get('http://localhost:8080/rest/sv/getVotingClasses');
   }
-
+/*
   createCandidate(candidate: User2) {
     return this.http.post('http://localhost:8080/rest/sv/createCandidate', candidate);
   }

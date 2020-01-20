@@ -54,3 +54,12 @@ export class Candidature {
   ) {
   }
 }
+
+export class Punkte {
+  constructor(
+    public id: string = '',
+    public score = 0
+  ) {
+  }
+
+}
