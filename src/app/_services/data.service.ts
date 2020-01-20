@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
+import {Candidature} from '../_entities/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -6,5 +7,7 @@ import { Injectable } from '@angular/core';
 export class DataService {
 
   constructor() { }
+
+  public candidateEmitter: EventEmitter<Candidature> = new EventEmitter();
 
 }

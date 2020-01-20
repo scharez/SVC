@@ -21,6 +21,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { UploadCsvComponent } from './dashboard/home/upload-csv/upload-csv.component';
 import { ElectedClassesComponent } from './dashboard/home/elected-classes/elected-classes.component';
 import { ElectSettingsComponent } from './dashboard/home/elect-settings/elect-settings.component';
+import {UpdateCandidatesComponent} from './dashboard/candidate/updateCandidates/updateCandidates.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ElectSettingsComponent } from './dashboard/home/elect-settings/elect-se
     CandidateComponent,
     UploadCsvComponent,
     ElectedClassesComponent,
-    ElectSettingsComponent
+    ElectSettingsComponent,
+    UpdateCandidatesComponent
   ],
   imports: [
     BrowserModule,

@@ -14,3 +14,10 @@ enum Electionstate {
   STOPPED,
   ENDED
 }
+
+enum Department {
+  INFORMATIK,
+  MEDIENTECHNIK,
+  ELEKTRONIK,
+  MEDIZINTECHNIK
+}
