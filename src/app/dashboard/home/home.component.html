@@ -17,7 +17,7 @@
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
           <app-voting-results *ngIf="card.title === 'Stimmenverteilung'"></app-voting-results>
-          <app-upload-csv *ngIf="card.title === 'Klassen Hinzufügen'"></app-upload-csv>
+          <app-upload-csv *ngIf="card.title === 'Hochladen eines CSV File'"></app-upload-csv>
           <app-elected-classes *ngIf="card.title === 'Klassen \n [Ergebnis gewählt]'"></app-elected-classes>
           <app-elect-settings *ngIf="card.title === 'Wahleinstellungen'"></app-elect-settings>
         </mat-card-content>
