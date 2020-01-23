@@ -88,6 +88,8 @@ export class ElectionComponent implements OnInit, AfterViewInit {
   private pseudoInit() {
 
     for (let i = 0; i < this.candidatesS.length; i++) {
+
+      alert(this.candidatesS[i].username);
       this.punkteS[i].username = this.candidatesS[i].username;
       this.punkteS[i].score = 0;
       this.punkteS[i].first = 0;
@@ -107,7 +109,6 @@ export class ElectionComponent implements OnInit, AfterViewInit {
     console.log("leeeeeeeeeeeeck mich");
     res.forEach(item => {
       console.log(item.candidate.firstname);
-      // @ts-ignore
       if (item.election.electiontype !== Electiontype.SCHULSPRECHER) {
         this.candidatesS[this.countS] = {'id': this.countS,'firstname': item.candidate.firstname, 'lastname': item.candidate.lastname, 'username': item.candidate.username};
         this.countS++;
@@ -125,7 +126,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
 
 
   // Pop-Up fenster zur Klassen auswahl
-  onChooseClass() {
+  onChooseClass () {
     // if (localStorage.getItem('showDialog') === 'true') {
     const dialogRef = this.dialog.open(ChooseClassComponent, {
       width: '250px',

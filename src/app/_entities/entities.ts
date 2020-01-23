@@ -59,7 +59,7 @@ export class Candidature {
 
 export class Punkte {
   constructor(
-    public username = '',
+    public username?: string,
     public score = 0,
     public first = 0
   ) {
