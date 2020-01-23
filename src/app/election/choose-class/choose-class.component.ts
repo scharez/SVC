@@ -20,11 +20,15 @@ export class ChooseClassComponent implements OnInit {
   }
 
   sClass = '';
-  classes: String[] = ['5AHITM', '3AHIF']
+  classes: String[] = [];
 
   ngOnInit(): void {
-    this.httpService.getCandidatures().subscribe(result => {
+    this.httpService.getSchoolClass().subscribe(result => {
       console.log(result);
+
+      result.forEach((value, index) => {
+        this.classes[index] = value.name;
+      })
       //this.loadClass(result);
     });
   }

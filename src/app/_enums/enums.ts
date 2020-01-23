@@ -1,14 +1,14 @@
 
 /* Enums */
 
-enum Electiontype {
+export enum Electiontype {
   SCHULSPRECHER,
   ABTEILUNGSSPRECHER,
   STICHWAHL_SCHULSPRECHER,
   STICHWAHL_ABTEILUNGSSPRECHER
 }
 
-enum Electionstate {
+export enum Electionstate {
   NEW,
   RUNNING,
   STOPPED,

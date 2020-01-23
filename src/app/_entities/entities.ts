@@ -1,6 +1,8 @@
 
 /* Entities */
 
+import {Electionstate, Electiontype} from '../_enums/enums';
+
 export class Candidate {
   constructor(
     public id: number = 0,
@@ -22,7 +24,7 @@ export class Election {
   }
 }
 
-class Schoolclass {
+export class Schoolclass {
   constructor(
     public id: number = 0,
     public name: string = '',
@@ -31,7 +33,7 @@ class Schoolclass {
   }
 }
 
-class Schoolclassresult {
+export class Schoolclassresult {
   constructor(
     public id: number = 0,
     public schoolclass: Schoolclass,
@@ -57,8 +59,9 @@ export class Candidature {
 
 export class Punkte {
   constructor(
-    public id: string = '',
-    public score = 0
+    public username = '',
+    public score = 0,
+    public first = 0
   ) {
   }
 

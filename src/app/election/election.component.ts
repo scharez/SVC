@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {forEachComment} from 'tslint';
 import {HttpService} from 'src/app/_services/http.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {ChooseClassComponent} from 'src/app/election/choose-class/choose-class.component';
 import {FinishedComponent} from 'src/app/election/finished/finished.component';
 import {DataService} from 'src/app/_services/data.service';
-import {Candidature, Punkte, Candidate} from 'src/app/_entities/entities';
-import {Router} from '@angular/router';
-import {ActivatedRoute} from '@angular/router';
+import {Candidate, Candidature, Punkte} from 'src/app/_entities/entities';
+import {ActivatedRoute, Router} from '@angular/router';
+import {SchoolClassResultDTO} from 'src/app/_dtos/dtos';
+import {Electiontype} from '../_enums/enums';
 
 
 @Component({
@@ -49,6 +49,12 @@ export class ElectionComponent implements OnInit, AfterViewInit {
   countS: number = 0;
   countA: number = 0;
 
+  schoolClassResultDTOsA: SchoolClassResultDTO[] = [];
+  schoolClassResultDTOsS: SchoolClassResultDTO[] = [];
+
+  maxpunkteS = 6;
+  maxpunkteA = 2;
+
   /*Kartenhöhe*/
   laenge: number;
   height: string;
@@ -61,7 +67,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
     this.router = router;
     this.httpService = httpService;
     this.dialog = dialog;
-    //this.httpService.getCandidatures().subscribe((res) => this.putCandidature(res));
+    //
   }
 
 
@@ -69,12 +75,12 @@ export class ElectionComponent implements OnInit, AfterViewInit {
     this.isClass = this.route.queryParams.subscribe(params => {
       if (params.klasse) {
         this.getClass = params.klasse;
+
+
         console.log(this.getClass);
       }
 
     });
-
-
 
   }
 
@@ -82,24 +88,27 @@ export class ElectionComponent implements OnInit, AfterViewInit {
   private pseudoInit() {
 
     for (let i = 0; i < this.candidatesS.length; i++) {
-      this.punkteS.push({'id': this.candidatesS[i].username, 'score': 0});
+      this.punkteS[i].username = this.candidatesS[i].username;
+      this.punkteS[i].score = 0;
+      this.punkteS[i].first = 0;
       console.log(this.punkteS[i]);
     }
     for (let a = 0; a < this.candidatesA.length; a++) {
-      this.punkteA.push({'id': this.candidatesA[a].username, 'score': 0});
+      this.punkteA[a].username = this.candidatesA[a].username;
+      this.punkteA[a].score = 0;
+      this.punkteA[a].first = 0;
       console.log(this.punkteA[a]);
     }
-    console.log(this.punkteS, this.punkteA, this.height);
-
   }
 
 
   putCandidature(res: Array<Candidature>) {
     console.log(res);
+    console.log("leeeeeeeeeeeeck mich");
     res.forEach(item => {
       console.log(item.candidate.firstname);
       // @ts-ignore
-      if (item.election.electiontype === 'SCHULSPRECHER') {
+      if (item.election.electiontype !== Electiontype.SCHULSPRECHER) {
         this.candidatesS[this.countS] = {'id': this.countS,'firstname': item.candidate.firstname, 'lastname': item.candidate.lastname, 'username': item.candidate.username};
         this.countS++;
       } else {
@@ -126,6 +135,16 @@ export class ElectionComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.myClass = result;
+      this.httpService.getCandidatures().subscribe((res) => this.putCandidature(res));
+      this.schoolClassResultDTOsS.forEach(schoolClassResultDTO => {
+        schoolClassResultDTO.schoolclassname = this.getClass;
+        schoolClassResultDTO.date = '20/01/2020';
+      })
+
+      this.schoolClassResultDTOsA.forEach(schoolClassResultDTO => {
+        schoolClassResultDTO.schoolclassname = this.getClass;
+        schoolClassResultDTO.date = '20/01/2020';
+      })
     });
 
   }
@@ -143,7 +162,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
 
     /*Matrikelnummer und Punkte für den Server ohne doppelte Matrikelnummer holen für den Schulsprecher*/
     for (let i = 0; i < this.punkteS.length; i++) {
-      if (this.punkteS[i].id === this.punkteS[getI].id) {
+      if (this.punkteS[i].username === this.punkteS[getI].username) {
         for (let j = 0; j < this.punkteS.length; j++) {
           if (this.punkteS[j].score === val) {
             this.punkteS[j].score = 0;
@@ -167,7 +186,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
 
     /*Matrikelnummer und Punkte für den Server ohne doppelte Matrikelnummer holen für den Abteilungssprecher*/
     for (let a = 0; a < this.punkteA.length; a++) {
-      if (this.punkteA[a].id === this.punkteA[getA].id) {
+      if (this.punkteA[a].username === this.punkteA[getA].username) {
         for (let k = 0; k < this.punkteA.length; k++) {
           if (this.punkteA[k].score === val) {
             this.punkteA[k].score = 0;
@@ -195,19 +214,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
 
 
   voteAgain() {
-    this.httpService.sendPoints(this.punkteS).subscribe();
-    this.httpService.sendPoints(this.punkteA).subscribe();
-
-
     console.log(this.punkteString, this.punkteA);
-
-    for (let i = 0; i < this.punkteS.length; i++) {
-      this.punkteS[i].score = 0;
-    }
-
-    for (let a = 0; a < this.punkteA.length; a++) {
-      this.punkteA[a].score = 0;
-    }
 
     this.resetData();
 
@@ -222,27 +229,40 @@ export class ElectionComponent implements OnInit, AfterViewInit {
       width: '250px'
     });
 
+    this.punkteS.forEach((value, index) => {
+      this.schoolClassResultDTOsS[index].username += this.punkteS[index].username;
+      this.schoolClassResultDTOsS[index].score += this.punkteS[index].score;
+      if(this.punkteS[index].score === this.maxpunkteS){
+        this.schoolClassResultDTOsS[index].first += 1;
+      }
+    })
+
+    this.punkteA.forEach((value, index) => {
+      this.schoolClassResultDTOsA[index].username += this.punkteA[index].username;
+      this.schoolClassResultDTOsA[index].score += this.punkteA[index].score;
+      if(this.punkteA[index].score === this.maxpunkteA){
+        this.schoolClassResultDTOsA[index].first += 1;
+      }
+    })
+
+    this.httpService.createSchoolClassResult(this.schoolClassResultDTOsS);
+    this.httpService.createSchoolClassResult(this.schoolClassResultDTOsA);
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
 
-  instanceMEDT() {
-    this.httpService.instanceCVs(this.myClass).subscribe();
-  }
-
-  endElection() {
-    this.httpService.endElection();
-  }
-
   // reseting the Radio Button Data
   resetData() {
     for (let i = 0; i < this.punkteS.length; i++) {
+      this.punkteS[i].username = '';
       this.punkteS[i].score = 0;
       this.seletedValueOfRow[i] = 0;
     }
 
     for (let a = 0; a < this.punkteA.length; a++) {
+      this.punkteA[a].username = '';
       this.punkteA[a].score = 0;
       this.seletedValueOfRow[a] = 0;
     }
@@ -266,7 +286,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
     if (this.getClass == null) {
       setTimeout(() => this.onChooseClass());
     } else {
-      this.httpService.instanceCVs(this.getClass).subscribe();
+      //this.httpService.instanceCVs(this.getClass).subscribe();
     }
   }
 }
