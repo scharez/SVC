@@ -39,7 +39,7 @@ export class CandidateComponent implements OnInit {
   sImage = '';
   cPosition = '';
 
-  updateCandidate: Candidature;
+  updateCandidate: Candidature = new Candidature();
   studentNew: Candidature;
 
   textTest: string;
@@ -56,19 +56,18 @@ export class CandidateComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.dataservice.candidateEmitter.subscribe(candidate => this.putCandidates(candidate));
-    this.dowloadStudents();
+    this.dataservice.candidateEmitter.subscribe(lol => this.putCandidates(lol));
   }
 
-  putCandidates(candidate) {
-    console.log(candidate.candidateClass)
-    this.updateCandidate.candidate.firstname = candidate.firstname;
-    this.updateCandidate.candidate.lastname = candidate.lastname;
-    this.updateCandidate.schoolclass.department = candidate.department;
-    this.updateCandidate.schoolclass.name = candidate.candidateClass;
-    this.updateCandidate.candidate.username = candidate.username;
-    this.updateCandidate.electionpromise = candidate.electionPromise;
-    this.updateCandidate.election.electiontype = candidate.position;
+  putCandidates(lol: Candidature) {
+    console.log(lol)
+    this.firstName = lol.candidate.firstname;
+    this.lastName = lol.candidate.lastname;
+    this.sDepartment = lol.schoolclass.department;
+    this.sClass = lol.schoolclass.name;
+    this.sMatrikelNr = lol.candidate.username;
+    this.sWahlversprechen = lol.electionpromise;
+    this.cPosition = lol.election.electiontype;
     console.log(this.updateCandidate);
     this.getDepartment();
 

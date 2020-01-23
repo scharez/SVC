@@ -9,5 +9,6 @@ export class DataService {
   constructor() { }
 
   public candidateEmitter: EventEmitter<Candidature> = new EventEmitter();
+  public candidature: Candidature;
 
 }

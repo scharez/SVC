@@ -7,7 +7,7 @@
     <mat-nav-list>
       <a mat-list-item routerLink="home">Home</a>
       <a mat-list-item routerLink="wahl">Wahl Einstellungen</a>
-      <a mat-list-item routerLink="candidates">Kandidaten</a>
+      <a mat-list-item [routerLink]="['candidates']">Kandidaten</a>
       <a mat-list-item routerLink="election">Wählen</a>
     </mat-nav-list>
   </mat-sidenav>

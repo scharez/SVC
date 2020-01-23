@@ -2,7 +2,7 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {HttpService} from '../../../_services/http.service';
 import {DataService} from '../../../_services/data.service';
 import {Candidate, Election, Candidature} from '../../../_entities/entities';
-
+import {Electiontype, Electionstate, Department} from '../../../_enums/enums';
 
 @Component({
   selector: 'updateCandidates',
@@ -23,7 +23,7 @@ export class UpdateCandidatesComponent implements OnInit {
     'schoolclass': {'id': 1, 'name': '4BHIF', 'currentdate': '2019/20', 'department': Department.ELEKTRONIK},
     'electionpromise': 'ICh bin gut!'
   }];
-  //candidates: Canidature[] = [];
+  // candidates: Canidature[] = [];
   count = 0;
 
 
@@ -52,5 +52,6 @@ export class UpdateCandidatesComponent implements OnInit {
   getCandidate(candidate: Candidature) {
     console.log(candidate);
     this.dataservice.candidateEmitter.emit(candidate);
+    this.dataservice.candidature = candidate;
   }
 }

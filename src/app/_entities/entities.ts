@@ -1,3 +1,5 @@
+import {Electiontype, Electionstate, Department} from '../_enums/enums';
+
 
 /* Entities */
 
@@ -44,12 +46,12 @@ class Schoolclassresult {
 
 export class Candidature {
   constructor(
-    public id: number = 0,
-    public candidate: Candidate,
-    public election: Election,
-    public schoolclass: Schoolclass,
+    public id?: number,
+    public candidate?: Candidate,
+    public election?: Election,
+    public schoolclass?: Schoolclass,
     public picture?: File,
-    public electionpromise: string = '',
+    public electionpromise?: string,
     public schoolclassresult?: Schoolclassresult[]
   ) {
     schoolclassresult = schoolclassresult ? schoolclassresult : [];

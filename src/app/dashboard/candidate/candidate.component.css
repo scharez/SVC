@@ -1,0 +1,8 @@
+.mat-card{
+  display: block;
+  background-color: white;
+  margin: 2% auto 4% 10% ;
+  float: right;
+  margin-right: 15%;
+  padding: 5%;
+}

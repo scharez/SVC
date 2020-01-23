@@ -30,32 +30,14 @@ hr {
 
 
 /*Dashboard Layout Mat-Cards --------------------------------------------------------------------------------------*/
-.mat-card {
-  width: 50%;
+.mat-card{
+  display: block;
+  width: 30%;
   background-color: white;
-  margin: 2% auto 4% 10%;
+  margin: 0;
   float: left;
 }
 
-/*Dashboard Layout Mat-Cards einzelne Karten--------------------------------------------------------------------------------------*/
-
-
-/*
-#schueler1 {
-  background: indigo;
-}
-
-#schueler2 {
-  background: beige;
-}
-
-#schueler3 {
-  background: brown;
-}
-
-#schueler2 {
-  background: lightgreen;
-}*/
 
 
 /*Dashboard Text auf Mat-Cards --------------------------------------------------------------------------------------*/
