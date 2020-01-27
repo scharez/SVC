@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoginDTO} from '../_models/loginDTO';
-import {Candidature, Punkte, Schoolclass,} from '../_entities/entities';
+import {Candidature, DateElectionType, Punkte, Schoolclass,} from '../_entities/entities';
 import {SchoolClassResultDTO} from '../_dtos/dtos';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
-    getSchoolClass() {
-      return this.http.get<Schoolclass[]>('http://localhost:8080/rest/sv/getSchoolClasses');
+    getSchoolClass(dateElectionType: DateElectionType) {
+      return this.http.post<Schoolclass[]>('http://localhost:8080/rest/sv/getVotingClasses', dateElectionType);
     }
     getCandidates(): any {
       return this.http.get('http://localhost:8080/rest/sv/getCandidates');

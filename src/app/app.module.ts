@@ -45,7 +45,8 @@ import { FinishedComponent } from './election/finished/finished.component';
     MatDatepickerModule
   ],
   entryComponents: [
-    ChooseClassComponent
+    ChooseClassComponent,
+    FinishedComponent
   ],
   providers: [HttpService, AuthGuard],
   bootstrap: [AppComponent]

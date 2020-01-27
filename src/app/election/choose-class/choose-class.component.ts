@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../../_services/http.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import {Candidature} from '../../_entities/entities';
+import {Candidature, DateElectionType} from '../../_entities/entities';
 
 @Component({
   selector: 'app-choose-class',
@@ -22,8 +22,11 @@ export class ChooseClassComponent implements OnInit {
   sClass = '';
   classes: String[] = [];
 
+  dateElectionType: DateElectionType
+
   ngOnInit(): void {
-    this.httpService.getSchoolClass().subscribe(result => {
+    this.dateElectionType = new DateElectionType('20/01/2020', 'SCHULSPRECHER');
+    this.httpService.getSchoolClass(this.dateElectionType).subscribe(result => {
       console.log(result);
 
       result.forEach((value, index) => {

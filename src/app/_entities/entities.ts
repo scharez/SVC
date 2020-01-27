@@ -28,6 +28,7 @@ export class Schoolclass {
   constructor(
     public id: number = 0,
     public name: string = '',
+    public dapartement: string = '',
     public currentdate: string = ''
   ) {
   }
@@ -59,10 +60,25 @@ export class Candidature {
 
 export class Punkte {
   constructor(
-    public username?: string,
+    public username: string = '',
     public score = 0,
     public first = 0
   ) {
   }
 
+}
+export class SavePoints {
+  constructor(
+    public username: string = '',
+    public score = 0,
+    public  first = 0
+  ) {
+  }
+}
+export class DateElectionType {
+  constructor(
+    public date: string = '',
+    public score: string = ''
+  ) {
+  }
 }
