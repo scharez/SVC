@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
 import {HttpService} from 'src/app/_services/http.service';
@@ -9,7 +9,8 @@ import {HttpService} from 'src/app/_services/http.service';
   styleUrls: ['./wahl.component.css']
 })
 export class WahlComponent implements OnInit {
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {
+  }
 
   date: Date;
 
@@ -39,7 +40,8 @@ export class WahlComponent implements OnInit {
 
     const json = JSON.stringify(obj);
 
+    console.log(json);
 
-    // this.httpService.newElection(json);
+    this.httpService.newElection(json);
   }
 }
