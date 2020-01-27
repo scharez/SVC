@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../../_services/http.service';
 import {HttpClient} from '@angular/common/http';
 import {DataService} from '../../_services/data.service';
 import {log} from 'util';
 import {Candidature} from '../../_entities/entities';
+import {Department, Electiontype} from '../../_enums/enums';
 
 @Component({
   selector: 'app-candidate',
@@ -30,6 +31,7 @@ export class CandidateComponent implements OnInit {
   positions: string[] = ['SCHULSPRECHER', 'ABTEILUNGSLEITERE', 'ABTEILUNGSLEITERI'];
   departments: string[] = ['ELEKTRONIK', 'INFORMATIK', 'MEDIENTECHNIK', 'MEDIZINTECHNIK'];
 
+  id = 0;
   firstName = '';
   lastName = '';
   sDepartment = '';
@@ -43,12 +45,11 @@ export class CandidateComponent implements OnInit {
   studentNew: Candidature;
 
   textTest: string;
-  ret: string
+  ret: string;
 
   date: string;
 
   dataString: string = '';
-
 
 
   constructor(private http: HttpClient, httpService: HttpService, private dataservice: DataService) {
@@ -57,10 +58,14 @@ export class CandidateComponent implements OnInit {
 
   ngOnInit() {
     this.dataservice.candidateEmitter.subscribe(lol => this.putCandidates(lol));
+
   }
 
+
   putCandidates(lol: Candidature) {
-    console.log(lol)
+
+    console.log(lol);
+    this.id = lol.id;
     this.firstName = lol.candidate.firstname;
     this.lastName = lol.candidate.lastname;
     this.sDepartment = lol.schoolclass.department;
@@ -73,12 +78,6 @@ export class CandidateComponent implements OnInit {
 
   }
 
-  /*Herunterladen von schon eingetragenen Schülern*/
-  dowloadStudents() {
-   // this.httpService.getCandidates().subscribe(existingcandidates => function (existingcandidates) {
-      alert("hey");
-    // });
-  }
 
   /*Abteilungen abspeichern*/
   getDepartment() {
@@ -92,10 +91,12 @@ export class CandidateComponent implements OnInit {
       this.classes = this.elektronikClass;
     }
 
-    console.log("Hier" + this.classes);
+    console.log('Hier' + this.classes);
   }
 
   updateCandidates() {
+
+
     if (this.firstName === '') {
       alert('Nicht alle Felder ausgefüllt!');
     } else if (this.lastName === '') {
@@ -112,27 +113,38 @@ export class CandidateComponent implements OnInit {
       alert('Nicht alle Felder ausgefüllt!');
     } else {
 
+      this.updateCandidate.id = this.id;
       this.updateCandidate.candidate.firstname = this.firstName;
       this.updateCandidate.candidate.lastname = this.lastName;
-     // this.updateCandidate.election.electiontype = this.cPosition;
+      this.updateCandidate.election.electiontype = Electiontype[this.cPosition];
       this.updateCandidate.schoolclass.name = this.sClass;
-     // this.updateCandidate.schoolclass.department = this.sDepartment;
+      this.updateCandidate.schoolclass.department = Department[this.sDepartment];
       this.updateCandidate.electionpromise = this.sWahlversprechen;
       this.updateCandidate.candidate.username = this.sMatrikelNr;
 
       console.log(this.updateCandidate);
 
-      // this.httpService.updateCandidate(this.updateCandidate);
+      if (this.updateCandidate.id === 0) {
+        this.newCandidature(this.updateCandidate);
+      } else {
+        this.httpService.updateCandidature(this.updateCandidate);
+      }
+
     }
   }
 
+  newCandidature(updateCandidate: Candidature) {
+    this.httpService.newCandidature(this.updateCandidate);
+  }
+
   deleteCandidates() {
-    if (this.sMatrikelNr !== '' && this.sMatrikelNr !== undefined && this.sMatrikelNr !== null){
-    //  this.httpService.deleteCandidate(this.sMatrikelNr).subscribe(res => console.log(res));
+    if (this.sMatrikelNr !== '' && this.sMatrikelNr !== undefined && this.sMatrikelNr !== null) {
+       this.httpService.deleteCandidature(this.id).subscribe(res => console.log(res));
     }
   }
 
   neuErstellen() {
+    this.id = 0;
     this.firstName = '';
     this.lastName = '';
     this.sDepartment = '';
@@ -142,5 +154,4 @@ export class CandidateComponent implements OnInit {
     this.sImage = '';
     this.cPosition = '';
   }
-
 }

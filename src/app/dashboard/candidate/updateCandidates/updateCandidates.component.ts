@@ -32,7 +32,7 @@ export class UpdateCandidatesComponent implements OnInit {
 
   constructor(httpService: HttpService, private dataservice: DataService) {
     this.httpService = httpService;
-   // this.httpService.getCandidates().subscribe((res) => this.setCandidates(res));
+    this.httpService.getCandidatures().subscribe((res) => this.setCandidatures(res));
   }
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class UpdateCandidatesComponent implements OnInit {
 
   }
 
-  setCandidates(res) {
+  setCandidatures(res) {
     res.forEach(item => {
       console.log(item);
      this.candidates.push(item);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoginDTO} from '../_models/loginDTO';
+import {Candidature} from '../_entities/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,24 @@ export class HttpService {
   login(user: LoginDTO) {
     return this.http.post('http://localhost:8080/rest/sv/login', user);
   }
+
+  updateCandidature(candidature: Candidature) {
+    return this.http.post('http://localhost:8080/rest/sv/updateCandidature', candidature);
+  }
+
+  newCandidature(candidature: Candidature) {
+    return this.http.post('http://localhost:8080/rest/sv/createCandidate', candidature);
+  }
+
+  getCandidatures( ) {
+    return this.http.get('http://localhost:8080/rest/sv/getCandidatures');
+  }
+
+  deleteCandidature(id: number) {
+    return this.http.delete(`http://localhost:8080/mps-rest/webapi/mps/deleteAnmeldung/${id}`);
+  }
+
+
 
   /*
 
