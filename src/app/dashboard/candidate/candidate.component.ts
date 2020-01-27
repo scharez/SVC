@@ -27,8 +27,8 @@ export class CandidateComponent implements OnInit {
   /*Formular Daten*/
 
 
-  positions: string[] = ['Schulsprecher', 'AbteilungssprecherE', 'AbteilungssprecherI'];
-  departments: string[] = ['Elektronik', 'Informatik', 'Medientechnik', 'Medizintechnik'];
+  positions: string[] = ['SCHULSPRECHER', 'ABTEILUNGSLEITERE', 'ABTEILUNGSLEITERI'];
+  departments: string[] = ['ELEKTRONIK', 'INFORMATIK', 'MEDIENTECHNIK', 'MEDIZINTECHNIK'];
 
   firstName = '';
   lastName = '';
@@ -82,13 +82,13 @@ export class CandidateComponent implements OnInit {
 
   /*Abteilungen abspeichern*/
   getDepartment() {
-    if (this.sDepartment === 'Medientechnik') {
+    if (this.sDepartment === 'MEDIENTECHNIK') {
       this.classes = this.medientechnikClass;
-    } else if (this.sDepartment === 'Informatik') {
+    } else if (this.sDepartment === 'INFORMATIK') {
       this.classes = this.informatikClass;
-    } else if (this.sDepartment === 'Medizintechnik') {
+    } else if (this.sDepartment === 'MEDIZINTECHNIK') {
       this.classes = this.medizintechnikClass;
-    } else if (this.sDepartment === 'Elektronik') {
+    } else if (this.sDepartment === 'ELEKTRONIK') {
       this.classes = this.elektronikClass;
     }
 

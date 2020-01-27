@@ -20,7 +20,7 @@ export class UpdateCandidatesComponent implements OnInit {
     'id': 1,
     'candidate': {'id': 1, 'username': 'if160189', 'firstname': 'Lisa', 'lastname': 'Berger'},
     'election': {'id': 1, 'currentdate': '2019/20', 'electiontype': Electiontype.SCHULSPRECHER, 'electionstate': Electionstate.RUNNING},
-    'schoolclass': {'id': 1, 'name': '4BHIF', 'currentdate': '2019/20', 'department': Department.ELEKTRONIK},
+    'schoolclass': {'id': 1, 'name': '4AHEL', 'currentdate': '2019/20', 'department': Department.ELEKTRONIK},
     'electionpromise': 'ICh bin gut!'
   }];
   // candidates: Canidature[] = [];
