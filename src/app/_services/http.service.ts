@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoginDTO} from '../_models/loginDTO';
-import {Candidature, DateElectionType, Punkte, Schoolclass,} from '../_entities/entities';
+import {Candidature, DateElectionType, Punkte, Schoolclass, } from '../_entities/entities';
 import {SchoolClassResultDTO} from '../_dtos/dtos';
 
 @Injectable({
@@ -14,8 +14,9 @@ export class HttpService {
     getCandidates(): any {
       return this.http.get('http://localhost:8080/rest/sv/getCandidates');
     }
-    createSchoolClassResult(schoolClassResultDTOs: SchoolClassResultDTO[]): any {
-      return this.http.post('http://localhost:8080/rest/sv/createSchoolClassResult', schoolClassResultDTOs);
+    createSchoolClassResult(schoolClassResultDTO: SchoolClassResultDTO) {
+      console.log(schoolClassResultDTO);
+      return this.http.post<string>('http://localhost:8080/rest/sv/createSchoolClassResult', schoolClassResultDTO);
     }
     createCandidature(): any {
       throw new Error('Method not implemented.');

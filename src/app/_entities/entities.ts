@@ -78,7 +78,7 @@ export class SavePoints {
 export class DateElectionType {
   constructor(
     public date: string = '',
-    public score: string = ''
+    public electionType: string = ''
   ) {
   }
 }

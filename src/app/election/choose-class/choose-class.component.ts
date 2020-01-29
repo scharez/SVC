@@ -20,7 +20,7 @@ export class ChooseClassComponent implements OnInit {
   }
 
   sClass = '';
-  classes: String[] = [];
+  classes: string[] = [];
 
   dateElectionType: DateElectionType
 
@@ -31,8 +31,8 @@ export class ChooseClassComponent implements OnInit {
 
       result.forEach((value, index) => {
         this.classes[index] = value.name;
-      })
-      //this.loadClass(result);
+      });
+      // this.loadClass(result);
     });
   }
 
@@ -46,6 +46,7 @@ export class ChooseClassComponent implements OnInit {
       location.reload();
       // localStorage.setItem('showDialog', 'true');
     } else {
+      alert(this.sClass);
       this.dialogRef.close();
       // localStorage.setItem('showDialog', 'false');
     }

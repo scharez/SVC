@@ -8,10 +8,10 @@ export enum Electiontype {
 }
 
 export enum Electionstate {
-  NEW,
-  RUNNING,
-  STOPPED,
-  ENDED
+  NEW = 'NEW',
+  RUNNING = 'RUNNING',
+  STOPPED = 'STOPPED',
+  ENDED = 'ENDED'
 }
 
 export enum Department {
