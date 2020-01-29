@@ -3,6 +3,7 @@ import {Electiontype, Electionstate, Department} from '../_enums/enums';
 
 /* Entities */
 
+import {Electionstate, Electiontype} from '../_enums/enums';
 
 export class Candidate {
   constructor(
@@ -30,7 +31,7 @@ export class Schoolclass {
     public id: number = 0,
     public name: string = '',
     public currentdate: string = '',
-    public department?: Department
+    public department: Department
   ) {
   }
 }
@@ -56,6 +57,15 @@ export class Candidature {
     public schoolclassresult?: Schoolclassresult[]
   ) {
     schoolclassresult = schoolclassresult ? schoolclassresult : [];
+  }
+}
+
+export class Punkte {
+  constructor(
+    public username: string = '',
+    public score = 0,
+    public first = 0
+  ) {
   }
 
 }

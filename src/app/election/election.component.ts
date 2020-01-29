@@ -1,12 +1,12 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {HttpService} from 'src/app/_services/http.service';
 import {MatDialog} from '@angular/material';
-//import {ChooseClassComponent} from 'src/app/election/choose-class/choose-class.component';
-//import {FinishedComponent} from 'src/app/election/finished/finished.component';
+import {ChooseClassComponent} from 'src/app/election/choose-class/choose-class.component';
+import {FinishedComponent} from 'src/app/election/finished/finished.component';
 import {DataService} from 'src/app/_services/data.service';
-import {Candidate, Candidature, /*Punkte,*/ SavePoints} from 'src/app/_entities/entities';
+import {Candidate, Candidature, Punkte, SavePoints} from 'src/app/_entities/entities';
 import {ActivatedRoute, Router} from '@angular/router';
-//import {SchoolClassResultDTO} from 'src/app/_dtos/dtos';
+import {SchoolClassResultDTO} from 'src/app/_dtos/dtos';
 import {Electiontype} from '../_enums/enums';
 
 
@@ -17,40 +17,34 @@ import {Electiontype} from '../_enums/enums';
 })
 export class ElectionComponent implements OnInit, AfterViewInit {
 
-  ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
-  }
-
-  /*private router: Router;
-  /!* HttpService*!/
+  private router: Router;
+  /* HttpService*/
   httpService: HttpService;
 
-  /!* Pop-Up Window*!/
+  /* Pop-Up Window*/
   dialog: MatDialog;
   myClass: string;
 
-  /!*Array der Kandidaten für den Schulsprecher*!/
+  /*Array der Kandidaten für den Schulsprecher*/
   candidatesS: Candidate[] = [];
 
 
-  /!*Array der Kandidaten für den Abteilungssprecher*!/
+  /*Array der Kandidaten für den Abteilungssprecher*/
   candidatesA: Candidate[] = [];
 
-  /!*Zum Vergleichen der Radio-Buttons*!/
+  /*Zum Vergleichen der Radio-Buttons*/
   seletedValueOfRow: number[] = new Array<number>(30);
   seletedValueOfRowAb: number[] = new Array<number>(30);
 
-  /!*Array für die Punkteanzahl vom Schulsprecher*!/
+  /*Array für die Punkteanzahl vom Schulsprecher*/
   punkteS: Punkte[] = [];
   punkteA: Punkte[] = [];
 
-  /!*Json*!/
+  /*Json*/
   punkteString;
   punkteString2;
 
-  /!*Wie viele Kandidaten werden ausgelesen und wie ist das aufgebaut*!/
+  /*Wie viele Kandidaten werden ausgelesen und wie ist das aufgebaut*/
   res: string;
   countS: number = 0;
   countA: number = 0;
@@ -61,7 +55,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
   maxpunkteS = 6;
   maxpunkteA = 2;
 
-  /!*Kartenhöhe*!/
+  /*Kartenhöhe*/
   laenge: number;
   height: string;
 
@@ -110,25 +104,29 @@ export class ElectionComponent implements OnInit, AfterViewInit {
 
 
   putCandidature(res: Array<Candidature>) {
-    console.log(res);
     console.log("leeeeeeeeeeeeck mich");
     res.forEach(item => {
-      console.log(item);
+      console.log(item.election.electiontype);
       console.log(item.candidate.username);
-      if (item.election.electiontype.toString() !== Electiontype.SCHULSPRECHER) {
-        this.candidatesS[this.countS] = {'id': this.countS,'firstname': item.candidate.firstname, 'lastname': item.candidate.lastname, 'username': item.candidate.username};
-        this.countS++;
-        this.schoolClassResultDTOsS.push(new SchoolClassResultDTO(item.candidate.username, this.myClass, '26-01-2020', 0, 0));
-      } else {
-        this.candidatesA[this.countA] = {'id': this.countA,'firstname': item.candidate.firstname, 'lastname': item.candidate.lastname, 'username': item.candidate.username};
-        this.countA++;
-        this.schoolClassResultDTOsA.push(new SchoolClassResultDTO(item.candidate.username, this.myClass, '26-01-2020', 0, 0));
+      switch(item.election.electiontype){
+        case (Electiontype.SCHULSPRECHER):
+          this.candidatesS[this.countS] = {'id': this.countS,'firstname': item.candidate.firstname, 'lastname': item.candidate.lastname, 'username': item.candidate.username};
+          this.countS++;
+          this.schoolClassResultDTOsS.push(new SchoolClassResultDTO(item.candidate.username, this.myClass, '20/01/2020', 0, 0));
+        case(Electiontype.ABTEILUNGSSPRECHER):
+          this.candidatesA[this.countA] = {'id': this.countA,'firstname': item.candidate.firstname, 'lastname': item.candidate.lastname, 'username': item.candidate.username};
+          this.countA++;
+          this.schoolClassResultDTOsA.push(new SchoolClassResultDTO(item.candidate.username, this.myClass, '20/01/2020', 0, 0));
+        default:
+          this.candidatesS[this.countS] = {'id': this.countS,'firstname': item.candidate.firstname, 'lastname': item.candidate.lastname, 'username': item.candidate.username};
+          this.countS++;
+          this.schoolClassResultDTOsS.push(new SchoolClassResultDTO(item.candidate.username, this.myClass, '20/01/2020', 0, 0));
       }
     });
 
     this.pseudoInit();
 
-    /!*Kartenhöhe*!/
+    /*Kartenhöhe*/
     this.laenge = this.candidatesS.length + this.candidatesA.length;
     this.height = this.laenge * 10.5 + 'em';
   }
@@ -144,15 +142,20 @@ export class ElectionComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.myClass = result;
-      this.httpService.getCandidatures().subscribe((res) => this.putCandidature(res));
+      this.myClass = dialogRef.componentInstance.sClass;
+      if(this.myClass !== ''){
+        alert(this.myClass);
+        this.httpService.getCandidatures().subscribe((res) => this.putCandidature(res));
+      } else {
+        this.onChooseClass();
+      }
 
     });
 
   }
 
 
-  /!*Schulsprecher nur 1 Radio-Button auswählen*!/
+  /*Schulsprecher nur 1 Radio-Button auswählen*/
   getValue(getI: number, val: number) {
     for (let i = 0; i < this.seletedValueOfRow.length; i++) {
       if (this.seletedValueOfRow[i] === val) {
@@ -162,7 +165,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
     this.seletedValueOfRow[getI] = val;
 
 
-    /!*Matrikelnummer und Punkte für den Server ohne doppelte Matrikelnummer holen für den Schulsprecher*!/
+    /*Matrikelnummer und Punkte für den Server ohne doppelte Matrikelnummer holen für den Schulsprecher*/
     for (let i = 0; i < this.punkteS.length; i++) {
       if (this.punkteS[i].username === this.punkteS[getI].username) {
         for (let j = 0; j < this.punkteS.length; j++) {
@@ -176,7 +179,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
     console.log(this.punkteS);
   }
 
-  /!*Abteilungssprecher nur 1 Radio-Button auswählen*!/
+  /*Abteilungssprecher nur 1 Radio-Button auswählen*/
   getValueAb(getA: number, val: number) {
     for (let a = 0; a < this.seletedValueOfRowAb.length; a++) {
       if (this.seletedValueOfRowAb[a] === val) {
@@ -186,7 +189,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
     this.seletedValueOfRowAb[getA] = val;
 
 
-    /!*Matrikelnummer und Punkte für den Server ohne doppelte Matrikelnummer holen für den Abteilungssprecher*!/
+    /*Matrikelnummer und Punkte für den Server ohne doppelte Matrikelnummer holen für den Abteilungssprecher*/
     for (let a = 0; a < this.punkteA.length; a++) {
       if (this.punkteA[a].username === this.punkteA[getA].username) {
         for (let k = 0; k < this.punkteA.length; k++) {
@@ -204,12 +207,12 @@ export class ElectionComponent implements OnInit, AfterViewInit {
   }
 
 
-  /!* ID für Kandidaten für den Schulsprecher*!/
+  /* ID für Kandidaten für den Schulsprecher*/
   getKa(i: number) {
     return this.seletedValueOfRow[i];
   }
 
-  /!* ID für Kandidaten für den Abteilungssprecher*!/
+  /* ID für Kandidaten für den Abteilungssprecher*/
   getAb(a: number) {
     return this.seletedValueOfRowAb[a];
   }
@@ -250,8 +253,15 @@ export class ElectionComponent implements OnInit, AfterViewInit {
     });
 
     console.log(this.schoolClassResultDTOsS);
-    this.httpService.createSchoolClassResult(this.schoolClassResultDTOsS);
-    this.httpService.createSchoolClassResult(this.schoolClassResultDTOsA);
+    this.schoolClassResultDTOsS.forEach((value, index) => {
+      this.httpService.createSchoolClassResult(value).subscribe( (res) => {
+        console.log(res);
+      });
+    });
+
+    /*this.schoolClassResultDTOsA.forEach((value, index) => {
+      this.httpService.createSchoolClassResult(value);
+    });*/
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -291,6 +301,6 @@ export class ElectionComponent implements OnInit, AfterViewInit {
     } else {
       //this.httpService.instanceCVs(this.getClass).subscribe();
     }
-  }*/
+  }
 }
 
