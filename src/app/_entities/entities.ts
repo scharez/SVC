@@ -1,3 +1,5 @@
+import {Electiontype, Electionstate, Department} from '../_enums/enums';
+
 
 /* Entities */
 
@@ -5,7 +7,7 @@ import {Electionstate, Electiontype} from '../_enums/enums';
 
 export class Candidate {
   constructor(
-    public id: number = 0,
+    public id?: number,
     public username: string = '',
     public firstname: string = '',
     public lastname: string = '',
@@ -18,8 +20,8 @@ export class Election {
   constructor(
     public id: number = 0,
     public currentdate: string = '',
-    public electiontype: Electiontype,
-    public electionstate: Electionstate,
+    public electiontype?: Electiontype,
+    public electionstate?: Electionstate,
   ) {
   }
 }
@@ -28,8 +30,8 @@ export class Schoolclass {
   constructor(
     public id: number = 0,
     public name: string = '',
-    public dapartement: string = '',
-    public currentdate: string = ''
+    public currentdate: string = '',
+    public department: Department
   ) {
   }
 }
@@ -46,15 +48,15 @@ export class Schoolclassresult {
 
 export class Candidature {
   constructor(
-    public id: number = 0,
-    public candidate: Candidate,
-    public election: Election,
-    public schoolclass: Schoolclass,
-    public picture: File,
-    public electionpromise: string = '',
-    public schoolclassresult: Schoolclassresult[] = []
-
+    public id?: number,
+    public candidate?: Candidate,
+    public election?: Election,
+    public schoolclass?: Schoolclass,
+    public picture?: File,
+    public electionpromise?: string,
+    public schoolclassresult?: Schoolclassresult[]
   ) {
+    schoolclassresult = schoolclassresult ? schoolclassresult : [];
   }
 }
 

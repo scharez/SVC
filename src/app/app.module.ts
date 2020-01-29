@@ -20,6 +20,10 @@ import { CandidateComponent } from './dashboard/candidate/candidate.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { ChooseClassComponent } from './election/choose-class/choose-class.component';
 import { FinishedComponent } from './election/finished/finished.component';
+import { UploadCsvComponent } from './dashboard/home/upload-csv/upload-csv.component';
+import { ElectedClassesComponent } from './dashboard/home/elected-classes/elected-classes.component';
+import { ElectSettingsComponent } from './dashboard/home/elect-settings/elect-settings.component';
+import {UpdateCandidatesComponent} from './dashboard/candidate/updateCandidates/updateCandidates.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +37,10 @@ import { FinishedComponent } from './election/finished/finished.component';
     CandidateComponent,
     ChooseClassComponent,
     FinishedComponent
+    UploadCsvComponent,
+    ElectedClassesComponent,
+    ElectSettingsComponent,
+    UpdateCandidatesComponent
   ],
   imports: [
     BrowserModule,
@@ -41,8 +49,7 @@ import { FinishedComponent } from './election/finished/finished.component';
     BrowserAnimationsModule,
     LayoutModule,
     GoogleChartsModule,
-    MaterialModule,
-    MatDatepickerModule
+    MaterialModule
   ],
   entryComponents: [
     ChooseClassComponent,
