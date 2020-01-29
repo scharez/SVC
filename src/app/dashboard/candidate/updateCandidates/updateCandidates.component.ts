@@ -16,11 +16,14 @@ export class UpdateCandidatesComponent implements OnInit {
 
   lol: Candidate = new Candidate(0, 'if160189', 'Lisa', 'Berger');
 
+
   candidates: Candidature[] = [{
     'id': 1,
     'candidate': {'id': 1, 'username': 'if160189', 'firstname': 'Lisa', 'lastname': 'Berger'},
-    'election': {'id': 1, 'currentdate': '2019/20', 'electiontype': Electiontype.SCHULSPRECHER, 'electionstate': Electionstate.RUNNING},
-    'schoolclass': {'id': 1, 'name': '4AHEL', 'currentdate': '2019/20', 'department': Department.ELEKTRONIK},
+    // @ts-ignore
+    'election': {'id': 1, 'currentdate': '2019/20', 'electiontype': 'SCHULSPRECHER', 'electionstate': 'RUNNING'},
+    // @ts-ignore
+    'schoolclass': {'id': 1, 'name': '4AHEL', 'currentdate': '2019/20', 'department': 'ELEKTRONIK'},
     'electionpromise': 'ICh bin gut!'
   }];
   // candidates: Canidature[] = [];
@@ -42,10 +45,10 @@ export class UpdateCandidatesComponent implements OnInit {
 
   setCandidatures(res) {
     res.forEach(item => {
+      console.log('looooooooool');
       console.log(item);
-     this.candidates.push(item);
+      this.candidates.push(item);
     });
-
     console.log(this.candidates);
   }
 

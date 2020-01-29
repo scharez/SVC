@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {DataService} from '../../_services/data.service';
 import {log} from 'util';
 import {Candidature} from '../../_entities/entities';
-import {Department, Electiontype} from '../../_enums/enums';
+import {Department} from '../../_enums/enums';
 
 @Component({
   selector: 'app-candidate',
@@ -49,7 +49,7 @@ export class CandidateComponent implements OnInit {
 
   date: string;
 
-  dataString: string = '';
+  dataString = '';
 
 
   constructor(private http: HttpClient, httpService: HttpService, private dataservice: DataService) {
@@ -63,16 +63,15 @@ export class CandidateComponent implements OnInit {
 
 
   putCandidates(lol: Candidature) {
-
-    console.log(lol);
+    console.log('Das ist der Kandidat: __________________________' + lol.schoolclass);
     this.id = lol.id;
     this.firstName = lol.candidate.firstname;
     this.lastName = lol.candidate.lastname;
-    this.sDepartment = lol.schoolclass.department;
+    this.cPosition = lol.election.electiontype;
     this.sClass = lol.schoolclass.name;
+    this.sDepartment = lol.schoolclass.department;
     this.sMatrikelNr = lol.candidate.username;
     this.sWahlversprechen = lol.electionpromise;
-    this.cPosition = lol.election.electiontype;
     console.log(this.updateCandidate);
     this.getDepartment();
 
@@ -101,7 +100,7 @@ export class CandidateComponent implements OnInit {
       alert('Nicht alle Felder ausgefüllt!');
     } else if (this.lastName === '') {
       alert('Nicht alle Felder ausgefüllt!');
-    } else if (this.sDepartment === '') {
+    } else if (this.sDepartment === Department.EMPTY) {
       alert('Nicht alle Felder ausgefüllt!');
     } else if (this.sClass === '') {
       alert('Nicht alle Felder ausgefüllt!');
@@ -116,9 +115,11 @@ export class CandidateComponent implements OnInit {
       this.updateCandidate.id = this.id;
       this.updateCandidate.candidate.firstname = this.firstName;
       this.updateCandidate.candidate.lastname = this.lastName;
-      this.updateCandidate.election.electiontype = Electiontype[this.cPosition];
+      // @ts-ignore
+      this.updateCandidate.election.electiontype = this.cPosition;
       this.updateCandidate.schoolclass.name = this.sClass;
-      this.updateCandidate.schoolclass.department = Department[this.sDepartment];
+      // @ts-ignore
+      this.updateCandidate.schoolclass.department = this.sDepartment;
       this.updateCandidate.electionpromise = this.sWahlversprechen;
       this.updateCandidate.candidate.username = this.sMatrikelNr;
 
@@ -147,7 +148,7 @@ export class CandidateComponent implements OnInit {
     this.id = 0;
     this.firstName = '';
     this.lastName = '';
-    this.sDepartment = '';
+    this.sDepartment = Department.EMPTY;
     this.sClass = '';
     this.sMatrikelNr = '';
     this.sWahlversprechen = '';

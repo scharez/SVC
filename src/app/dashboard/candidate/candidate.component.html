@@ -12,19 +12,19 @@
 
       <!--Vorname-->
       <mat-form-field class="example-full-width" class="alignData">
-        <input matInput required placeholder="Vorname" [(ngModel)]="firstName">
+        <input matInput required [(ngModel)]="firstName">
       </mat-form-field>
       <br>
 
       <!--Nachname-->
       <mat-form-field class="example-full-width" class="alignData">
-        <input matInput required placeholder="Nachname" [(ngModel)]="lastName">
+        <input matInput required [(ngModel)]="lastName">
       </mat-form-field>
       <br>
 
       <!--Choose Zweig-->
       <mat-form-field class="example-full-width" class="alignData">
-        <mat-select required placeholder="Department" [(ngModel)]="sDepartment" (ngModelChange)="getDepartment()">
+        <mat-select required [(ngModel)]="sDepartment" (ngModelChange)="getDepartment()">
           <mat-option
             *ngFor="let option of departments" [value]="option">
             {{option}}
@@ -35,7 +35,7 @@
 
       <!--Choose Klasse-->
       <mat-form-field class="alignData">
-        <mat-select required placeholder="Klasse" [(ngModel)]="sClass">
+        <mat-select required  [(ngModel)]="sClass">
           <mat-option *ngFor="let class of classes" [value]="class">
             {{class}}
           </mat-option>
@@ -45,13 +45,13 @@
       <br>
       <!--Matrikelnummer-->
       <mat-form-field class="example-full-width" class="alignData">
-        <input matInput required minlength="8" maxlength="8" placeholder="Matrikelnummer" [(ngModel)]="sMatrikelNr">
+        <input matInput required minlength="8" maxlength="8" [(ngModel)]="sMatrikelNr">
       </mat-form-field>
       <br>
 
       <!--Position-->
       <mat-form-field class="alignData">
-        <mat-select required placeholder="Position" [(ngModel)]="cPosition">
+        <mat-select required [(ngModel)]="cPosition">
           <mat-option *ngFor="let position of positions" [value]="position">
             {{position}}
           </mat-option>
@@ -62,7 +62,7 @@
     <!--write Wahlversprechen-->
     <div>
       <mat-form-field class="example-full-width" class="alignData">
-        <textarea matInput autosize required placeholder="Wahlversprechen" [(ngModel)]="sWahlversprechen"></textarea>
+        <textarea matInput autosize required  [(ngModel)]="sWahlversprechen"></textarea>
       </mat-form-field>
     </div>
     <br>
