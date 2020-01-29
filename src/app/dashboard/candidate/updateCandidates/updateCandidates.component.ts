@@ -19,9 +19,9 @@ export class UpdateCandidatesComponent implements OnInit {
   candidates: Candidature[] = [{
     'id': 1,
     'candidate': {'id': 1, 'username': 'if160189', 'firstname': 'Lisa', 'lastname': 'Berger'},
-    'election': {'id': 1, 'currentdate': '2019/20', 'electiontype': Electiontype.SCHULSPRECHER, 'electionstate': Electionstate.RUNNING},
-    'schoolclass': {'id': 1, 'name': '4AHEL', 'currentdate': '2019/20', 'department': Department.ELEKTRONIK},
-    'electionpromise': 'ICh bin gut!'
+    // FIONA  'election': {'id': 1, 'currentdate': '2019/20', 'electiontype': Electiontype.SCHULSPRECHER, 'electionstate': Electionstate.RUNNING},
+    // FIONA 'schoolclass': {'id': 1, 'name': '4AHEL', 'currentdate': '2019/20', 'department': Department.ELEKTRONIK},
+    'electionpromise': 'Ich bin gut!'
   }];
   // candidates: Canidature[] = [];
   count = 0;
@@ -33,6 +33,7 @@ export class UpdateCandidatesComponent implements OnInit {
   constructor(httpService: HttpService, private dataservice: DataService) {
     this.httpService = httpService;
     this.httpService.getCandidatures().subscribe((res) => this.setCandidatures(res));
+
   }
 
   ngOnInit() {
@@ -41,9 +42,10 @@ export class UpdateCandidatesComponent implements OnInit {
   }
 
   setCandidatures(res) {
+    console.log(res);
     res.forEach(item => {
       console.log(item);
-     this.candidates.push(item);
+      this.candidates.push(item);
     });
 
     console.log(this.candidates);
