@@ -81,9 +81,7 @@ export class HttpService {
 
   */
 
-  endElection() {
-    this.http.post('http://localhost:8080/rest/sv/endElection', null);
-  }
+
 
   /*
 

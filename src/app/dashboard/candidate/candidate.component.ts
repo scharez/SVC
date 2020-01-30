@@ -3,8 +3,8 @@ import {HttpService} from '../../_services/http.service';
 import {HttpClient} from '@angular/common/http';
 import {DataService} from '../../_services/data.service';
 import {log} from 'util';
-import {Candidature} from '../../_entities/entities';
-import {Department} from '../../_enums/enums';
+import {Candidate, Candidature, Election, Schoolclass, Schoolclassresult} from '../../_entities/entities';
+import {Department, Electiontype} from '../../_enums/enums';
 
 @Component({
   selector: 'app-candidate',
@@ -54,6 +54,10 @@ export class CandidateComponent implements OnInit {
 
   constructor(private http: HttpClient, httpService: HttpService, private dataservice: DataService) {
     this.httpService = httpService;
+    this.updateCandidate.candidate = new Candidate();
+    this.updateCandidate.schoolclass = new Schoolclass();
+    this.updateCandidate.election = new Election();
+
   }
 
   ngOnInit() {
@@ -63,15 +67,16 @@ export class CandidateComponent implements OnInit {
 
 
   putCandidates(lol: Candidature) {
-    console.log('Das ist der Kandidat: __________________________' + lol.schoolclass);
+
+    console.log(lol);
     this.id = lol.id;
     this.firstName = lol.candidate.firstname;
     this.lastName = lol.candidate.lastname;
-    this.cPosition = lol.election.electiontype;
-    this.sClass = lol.schoolclass.name;
     this.sDepartment = lol.schoolclass.department;
+    this.sClass = lol.schoolclass.name;
     this.sMatrikelNr = lol.candidate.username;
     this.sWahlversprechen = lol.electionpromise;
+    this.cPosition = lol.election.electiontype;
     console.log(this.updateCandidate);
     this.getDepartment();
 
@@ -100,7 +105,7 @@ export class CandidateComponent implements OnInit {
       alert('Nicht alle Felder ausgefüllt!');
     } else if (this.lastName === '') {
       alert('Nicht alle Felder ausgefüllt!');
-    } else if (this.sDepartment === Department.EMPTY) {
+    } else if (this.sDepartment === '') {
       alert('Nicht alle Felder ausgefüllt!');
     } else if (this.sClass === '') {
       alert('Nicht alle Felder ausgefüllt!');
@@ -112,14 +117,15 @@ export class CandidateComponent implements OnInit {
       alert('Nicht alle Felder ausgefüllt!');
     } else {
 
+      console.log("Firstname here:     "+ this.firstName);
+      console.log("Firstname here:     "+ this.updateCandidate.candidate.firstname);
+
       this.updateCandidate.id = this.id;
       this.updateCandidate.candidate.firstname = this.firstName;
       this.updateCandidate.candidate.lastname = this.lastName;
-      // @ts-ignore
-      this.updateCandidate.election.electiontype = this.cPosition;
+      this.updateCandidate.election.electiontype = Electiontype[this.cPosition];
       this.updateCandidate.schoolclass.name = this.sClass;
-      // @ts-ignore
-      this.updateCandidate.schoolclass.department = this.sDepartment;
+      this.updateCandidate.schoolclass.department = Department[this.sDepartment];
       this.updateCandidate.electionpromise = this.sWahlversprechen;
       this.updateCandidate.candidate.username = this.sMatrikelNr;
 

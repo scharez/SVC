@@ -36,7 +36,7 @@ import {UpdateCandidatesComponent} from './dashboard/candidate/updateCandidates/
     VotingresultsComponent,
     CandidateComponent,
     ChooseClassComponent,
-    FinishedComponent
+    FinishedComponent,
     UploadCsvComponent,
     ElectedClassesComponent,
     ElectSettingsComponent,
