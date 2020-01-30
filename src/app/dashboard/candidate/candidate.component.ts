@@ -113,6 +113,9 @@ export class CandidateComponent implements OnInit {
       alert('Nicht alle Felder ausgefüllt!');
     } else {
 
+      console.log("Firstname here:     "+ this.firstName);
+      console.log("Firstname here:     "+ this.updateCandidate.candidate.firstname);
+
       this.updateCandidate.id = this.id;
       this.updateCandidate.candidate.firstname = this.firstName;
       this.updateCandidate.candidate.lastname = this.lastName;
