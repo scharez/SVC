@@ -3,7 +3,7 @@ import {HttpService} from '../../_services/http.service';
 import {HttpClient} from '@angular/common/http';
 import {DataService} from '../../_services/data.service';
 import {log} from 'util';
-import {Candidature} from '../../_entities/entities';
+import {Candidate, Candidature, Election, Schoolclass, Schoolclassresult} from '../../_entities/entities';
 import {Department, Electiontype} from '../../_enums/enums';
 
 @Component({
@@ -54,6 +54,10 @@ export class CandidateComponent implements OnInit {
 
   constructor(private http: HttpClient, httpService: HttpService, private dataservice: DataService) {
     this.httpService = httpService;
+    this.updateCandidate.candidate = new Candidate();
+    this.updateCandidate.schoolclass = new Schoolclass();
+    this.updateCandidate.election = new Election();
+
   }
 
   ngOnInit() {
@@ -153,5 +157,5 @@ export class CandidateComponent implements OnInit {
     this.sWahlversprechen = '';
     this.sImage = '';
     this.cPosition = '';
-  }
+  }0
 }

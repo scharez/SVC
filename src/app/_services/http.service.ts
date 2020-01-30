@@ -51,9 +51,6 @@ export class HttpService {
     return this.http.post('http://localhost:8080/rest/sv/createCandidate', candidature);
   }
 
-  getCandidatures( ) {
-    return this.http.get('http://localhost:8080/rest/sv/getCandidatures');
-  }
 
   deleteCandidature(id: number) {
     return this.http.delete(`http://localhost:8080/mps-rest/webapi/mps/deleteAnmeldung/${id}`);
@@ -81,9 +78,7 @@ export class HttpService {
 
   */
 
-  endElection() {
-    this.http.post('http://localhost:8080/rest/sv/endElection', null);
-  }
+
 
   /*
 
