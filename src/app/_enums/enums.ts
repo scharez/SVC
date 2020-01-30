@@ -1,4 +1,3 @@
-
 /* Enums */
 
 export enum Electiontype {
@@ -9,10 +8,17 @@ export enum Electiontype {
 }
 
 export enum Electionstate {
-  NEW,
-  RUNNING,
-  STOPPED,
-  ENDED
+  NEW = 'NEW',
+  RUNNING = 'RUNNING',
+  STOPPED = 'STOPPED',
+  ENDED = 'ENDED'
+}
+
+export enum Department {
+  INFORMATIK= 'INFORMATIK',
+  MEDIENTECHNIK = 'MEDIENTECHNIK',
+  ELEKTRONIK = 'ELEKTRONIK',
+  MEDIZINTECHNIK = 'MEDIZINTECHNIK'
 }
 
 export enum Department {
