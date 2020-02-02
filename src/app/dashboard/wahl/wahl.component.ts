@@ -9,6 +9,7 @@ import {DataService} from '../../_services/data.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ChooseClassComponent} from '../../election/choose-class/choose-class.component';
 import {StartElectionComponent} from './start-election/start-election.component';
+import {browser} from 'protractor';
 
 @Component({
   selector: 'app-wahl',
@@ -21,12 +22,14 @@ export class WahlComponent implements OnInit {
   httpService: HttpService;
   datepipe: DatePipe;
   router: Router;
+  dataService: DataService
 
-  constructor(httpService: HttpService, datePipe: DatePipe, dialog: MatDialog, router: Router) {
+  constructor(httpService: HttpService, datePipe: DatePipe, dialog: MatDialog, router: Router, dataService: DataService) {
     this.httpService = httpService;
     this.datepipe = datePipe;
     this.dialog = dialog;
     this.router = router;
+    this.dataService = dataService;
   }
 
   date: Date = null;
@@ -66,7 +69,9 @@ export class WahlComponent implements OnInit {
 
       this.httpService.newElection(this.dateElectionType).subscribe(res => {
         console.log(res);
+        this.dataService.date = this.dateElectionType.date;
         this.router.navigate(['reloader']);
+        browser.refresh();
       });
     } else {
       alert('Please choose a date and the type of election')

@@ -47,7 +47,7 @@ export class Candidature {
     public candidate?: Candidate,
     public election?: Election,
     public schoolClass?: SchoolClass,
-    public picture?: File,
+    // public picture?: File,
     public electionpromise?: string,
     public schoolclassresult?: Schoolclassresult[]
   ) {
@@ -85,6 +85,14 @@ export class DateElectionTypeSchoolClass {
     public date: string = '',
     public electionType: string = '',
     public schoolClassName: string = ''
+  ) {
+  }
+}
+
+export class SchoolClassDate {
+  constructor(
+    public schoolClassName: string = '',
+    public date: string = ''
   ) {
   }
 }

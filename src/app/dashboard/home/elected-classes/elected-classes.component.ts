@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {HttpService} from '../../../_services/http.service';
-import {DateElectionType} from '../../../_entities/entities';
+import {DateElectionType, DateElectionTypeSchoolClass, SchoolClass, SchoolClassDate} from '../../../_entities/entities';
 
 @Component({
   selector: 'app-elected-classes',
@@ -18,6 +18,10 @@ export class ElectedClassesComponent implements OnInit {
 
   dateElectionType: DateElectionType;
 
+  schoolClass: SchoolClass;
+
+  dateElectionTypeSchoolClass: DateElectionTypeSchoolClass;
+
   constructor(dialog: MatDialog, private httpService: HttpService, private snackBar: MatSnackBar) {
     this.dialog = dialog;
   }
@@ -30,7 +34,7 @@ export class ElectedClassesComponent implements OnInit {
   further(classesjson) {
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < classesjson.length; i++) {
-      this.classes.push(classesjson[i].);
+      this.classes.push(classesjson[i]);
     }
 
   }
@@ -41,8 +45,10 @@ export class ElectedClassesComponent implements OnInit {
 
   choosenClass(getClass: string) {
 
-    this.httpService.deleteClass(getClass).subscribe((resClass) => {
-      this.openSnackBar("This Class was deleted", "ok");
+    this.dateElectionTypeSchoolClass.date = '20/01/2020';
+    this.dateElectionTypeSchoolClass.schoolClassName = getClass;
+    this.httpService.deleteSchoolClassResult(this.dateElectionTypeSchoolClass).subscribe((resClass) => {
+      this.openSnackBar('This Class was deleted', 'ok');
     });
   }
 
