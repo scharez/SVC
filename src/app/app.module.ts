@@ -24,6 +24,9 @@ import { UploadCsvComponent } from './dashboard/home/upload-csv/upload-csv.compo
 import { ElectedClassesComponent } from './dashboard/home/elected-classes/elected-classes.component';
 import { ElectSettingsComponent } from './dashboard/home/elect-settings/elect-settings.component';
 import {UpdateCandidatesComponent} from './dashboard/candidate/updateCandidates/updateCandidates.component';
+import {DatePipe} from '@angular/common';
+import { StartElectionComponent } from './dashboard/wahl/start-election/start-election.component';
+import { ReloaderComponent } from './reloader/reloader.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,9 @@ import {UpdateCandidatesComponent} from './dashboard/candidate/updateCandidates/
     UploadCsvComponent,
     ElectedClassesComponent,
     ElectSettingsComponent,
-    UpdateCandidatesComponent
+    UpdateCandidatesComponent,
+    StartElectionComponent,
+    ReloaderComponent
   ],
   imports: [
     BrowserModule,
@@ -53,9 +58,10 @@ import {UpdateCandidatesComponent} from './dashboard/candidate/updateCandidates/
   ],
   entryComponents: [
     ChooseClassComponent,
-    FinishedComponent
+    FinishedComponent,
+    StartElectionComponent
   ],
-  providers: [HttpService, AuthGuard],
+  providers: [HttpService, AuthGuard, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

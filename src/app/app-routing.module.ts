@@ -7,6 +7,7 @@ import {LoginComponent} from './login/login.component';
 import {ElectionComponent} from './election/election.component';
 import {AuthGuard} from './_guard/auth.guard';
 import {CandidateComponent} from './dashboard/candidate/candidate.component';
+import {ReloaderComponent} from './reloader/reloader.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -17,14 +18,15 @@ const routes: Routes = [
       {path: 'home', component: HomeComponent},
       {path: 'wahl', component: WahlComponent},
       {path: 'candidates', component: CandidateComponent},
-      {path: 'election', component: ElectionComponent, /* canActivate: [AuthGuard], data: { roles: ['ADMIN, Teacher']} */},
-    ]
-  }
+    ],
+  },
+  {path: 'election', component: ElectionComponent /* canActivate: [AuthGuard], data: { roles: ['ADMIN, Teacher']} */},
+  {path: 'reloader', component: ReloaderComponent}
 ];
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

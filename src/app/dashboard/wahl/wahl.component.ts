@@ -1,7 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, LOCALE_ID, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
 import {HttpService} from 'src/app/_services/http.service';
+import {DateElectionType, Election} from '../../_entities/entities';
+import {DatePipe} from '@angular/common';
+import {MatDialog} from '@angular/material';
+import {DataService} from '../../_services/data.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ChooseClassComponent} from '../../election/choose-class/choose-class.component';
+import {StartElectionComponent} from './start-election/start-election.component';
 
 @Component({
   selector: 'app-wahl',
@@ -9,39 +16,68 @@ import {HttpService} from 'src/app/_services/http.service';
   styleUrls: ['./wahl.component.css']
 })
 export class WahlComponent implements OnInit {
-  constructor(private httpService: HttpService) {
+
+  dialog: MatDialog;
+  httpService: HttpService;
+  datepipe: DatePipe;
+  router: Router;
+
+  constructor(httpService: HttpService, datePipe: DatePipe, dialog: MatDialog, router: Router) {
+    this.httpService = httpService;
+    this.datepipe = datePipe;
+    this.dialog = dialog;
+    this.router = router;
   }
 
-  date: Date;
+  date: Date = null;
+
+  eletiontypes = ['SCHULSPRECHER', 'ABTEILUNGSLEITERE', 'ABTEILUNGSLEITERI'];
+  eletiontype: string = '';
+  elections: Election[] = [];
+
+  dateElectionType: DateElectionType = new DateElectionType();
 
   ngOnInit() {
+    this.dateElectionType.electionType
+    this.httpService.getElections().subscribe(res => {
+      this.elections = res;
+      if(this.elections.length !== 0){
+        this.elections.forEach(value => {
+          console.log(value);
+          if(value.electionState !== 'ENDED') {
+            var index = this.eletiontypes.indexOf(value.electionType);
+            if (index !== -1) {
+              this.eletiontypes.splice(index, 1);
+            }
+          }
+        });
+        console.log(this.eletiontypes);
+      }
+    });
   }
 
   newElection() {
 
-    const obj = {
-      date: this.date,
-      electionType: 'WAHL'
-    };
+    if(this.eletiontype !== '' && this.date !== null){
 
-    const json = JSON.stringify(obj);
+      this.dateElectionType.electionType = this.eletiontype;
+      this.dateElectionType.date = this.datepipe.transform(this.date, 'dd/MM/yyyy');
+      alert(this.dateElectionType.date);
 
-    console.log(json);
-
-    this.httpService.newElection(json);
+      this.httpService.newElection(this.dateElectionType).subscribe(res => {
+        console.log(res);
+        this.router.navigate(['reloader']);
+      });
+    } else {
+      alert('Please choose a date and the type of election')
+    }
   }
 
-  runOff() {
-
-    const obj = {
-      date: this.date,
-      electionType: 'STICHWAHL'
-    };
-
-    const json = JSON.stringify(obj);
-
-    console.log(json);
-
-    this.httpService.newElection(json);
+  selectedElection(finalElection: Election){
+    const dialogRef = this.dialog.open(StartElectionComponent, {
+      width: '250px',
+      data: {name: finalElection}
+    }).afterClosed();
+    this.router.navigate(['reloader']);
   }
 }

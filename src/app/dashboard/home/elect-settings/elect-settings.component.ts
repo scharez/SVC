@@ -18,7 +18,7 @@ export class ElectSettingsComponent implements OnInit {
     alert('Begin Election');
     console.log('LOL');
 
-    this.httpService.beginElection();
+   // this.httpService.beginElection();
 
   }
 
@@ -26,7 +26,7 @@ export class ElectSettingsComponent implements OnInit {
 
     alert('End Election');
 
-    this.httpService.endElection();
+    // this.httpService.endElection();
   }
 
   endElection4Teacher(): void {

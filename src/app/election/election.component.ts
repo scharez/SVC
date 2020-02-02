@@ -97,7 +97,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
       this.punkteS.push(new Punkte(this.candidatesS[i].username, 0, 0));
     }
     for (let a = 0; a < this.candidatesA.length; a++) {
-      this.punkteS.push(new Punkte(this.candidatesA[a].username, 0, 0));
+      this.punkteA.push(new Punkte(this.candidatesA[a].username, 0, 0));
       console.log(this.punkteA[a]);
     }
   }
@@ -106,9 +106,9 @@ export class ElectionComponent implements OnInit, AfterViewInit {
   putCandidature(res: Array<Candidature>) {
     console.log("leeeeeeeeeeeeck mich");
     res.forEach(item => {
-      console.log(item.election.electiontype);
+      console.log(item.election.electionType);
       console.log(item.candidate.username);
-      switch(item.election.electiontype){
+      switch(item.election.electionType){
         case (Electiontype.SCHULSPRECHER):
           this.candidatesS[this.countS] = {'id': this.countS,'firstname': item.candidate.firstname, 'lastname': item.candidate.lastname, 'username': item.candidate.username};
           this.countS++;

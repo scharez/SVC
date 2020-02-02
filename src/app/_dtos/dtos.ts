@@ -12,3 +12,17 @@ export class SchoolClassResultDTO {
   }
 
 }
+
+export class CandidatureDTO {
+
+  constructor(
+    public username: string = '',
+    public firstname: string = '',
+    public lastname: string = '',
+    public date: string = '',
+    public electionType: string = '',
+    public schoolClassName: string = '',
+    public electionPromise: string = '',
+  ) {
+  }
+}

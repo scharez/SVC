@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {HttpService} from '../../../_services/http.service';
+import {DateElectionType} from '../../../_entities/entities';
 
 @Component({
   selector: 'app-elected-classes',
@@ -15,18 +16,21 @@ export class ElectedClassesComponent implements OnInit {
   dialog: MatDialog;
   myClass: string;
 
+  dateElectionType: DateElectionType;
+
   constructor(dialog: MatDialog, private httpService: HttpService, private snackBar: MatSnackBar) {
     this.dialog = dialog;
   }
 
   ngOnInit() {
-    this.httpService.getFinishedClasses().subscribe((classesjson) => this.further(classesjson));
+    this.dateElectionType = new DateElectionType('20/01/2020', 'SCHULSPRECHER');
+    this.httpService.getFinishedClasses(this.dateElectionType).subscribe((classesjson) => this.further(classesjson));
   }
 
   further(classesjson) {
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < classesjson.length; i++) {
-      this.classes.push(classesjson[i].name);
+      this.classes.push(classesjson[i].);
     }
 
   }

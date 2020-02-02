@@ -1,15 +1,27 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoginDTO} from '../_models/loginDTO';
-import {Candidature, DateElectionType, Punkte, Schoolclass, } from '../_entities/entities';
-import {SchoolClassResultDTO} from '../_dtos/dtos';
+import {
+  Candidate,
+  Candidature,
+  DateElectionType,
+  DateElectionTypeSchoolClass,
+  Election,
+  Punkte,
+  SchoolClass,
+  Status,
+} from '../_entities/entities';
+import {CandidatureDTO, SchoolClassResultDTO} from '../_dtos/dtos';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
+    getElections() {
+        return this.http.get<Election[]>('http://localhost:8080/rest/sv/getElections');
+    }
     getSchoolClass(dateElectionType: DateElectionType) {
-      return this.http.post<Schoolclass[]>('http://localhost:8080/rest/sv/getVotingClasses', dateElectionType);
+      return this.http.post<SchoolClass[]>('http://localhost:8080/rest/sv/getVotingClasses', dateElectionType);
     }
     getCandidates(): any {
       return this.http.get('http://localhost:8080/rest/sv/getCandidates');
@@ -20,9 +32,6 @@ export class HttpService {
     }
     createCandidature(): any {
       throw new Error('Method not implemented.');
-    }
-    endElection(): any {
-        throw new Error('Method not implemented.');
     }
     instanceCVs(myClass: string): any {
         throw new Error('Method not implemented.');
@@ -43,20 +52,20 @@ export class HttpService {
     return this.http.post('http://localhost:8080/rest/sv/login', user);
   }
 
-  updateCandidature(candidature: Candidature) {
-    return this.http.post('http://localhost:8080/rest/sv/updateCandidature', candidature);
+  updateCandidature(candidatureDTO: CandidatureDTO) {
+    return this.http.post<Status>('http://localhost:8080/rest/sv/updateCandidature', candidatureDTO);
   }
 
-  newCandidature(candidature: Candidature) {
-    return this.http.post('http://localhost:8080/rest/sv/createCandidate', candidature);
+  newCandidate(candidatureDTO: CandidatureDTO) {
+    return this.http.post<Status>('http://localhost:8080/rest/sv/createCandidate', candidatureDTO);
   }
 
-  getCandidatures() {
-      return this.http.get('http://localhost:8080/rest/sv/getCandidatures');
+  newCandidature(candidatureDTO: CandidatureDTO) {
+    return this.http.post<Status>('http://localhost:8080/rest/sv/createCandidature', candidatureDTO);
   }
 
-  deleteCandidature(id: number) {
-    return this.http.delete(`http://localhost:8080/rest/sv/deleteCandidature/${id}`);
+  deleteCandidature(candidate: Candidate) {
+    return this.http.post('http://localhost:8080/rest/sv/deleteCandidature', candidate);
   }
 
 
@@ -91,8 +100,8 @@ export class HttpService {
 
    */
 
-  beginElection() {
-    this.http.post('http://localhost:8080/rest/sv/startElection', null);
+  beginElection(dateElectionType: DateElectionType) {
+    return this.http.post<Status>('http://localhost:8080/rest/sv/startElection', dateElectionType);
   }
 
   endElectionTeacher() {
@@ -103,19 +112,19 @@ export class HttpService {
   postFile(file: File) {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    return this.http.post('http://localhost:8080/rest/sv/uploadCSV', formData);
+    return this.http.post<string>('http://localhost:8080/rest/sv/uploadCSV', formData);
   }
 
-
-  deleteClass(className: string) {
-    return this.http.post('http://localhost:8080/rest/sv/deleteClass', className);
-  }
-  newElection(json: string) {
-    this.http.post('http://localhost:8080/rest/sv/createElection', json);
+  deleteSchoolClassResult(dateElectionTypeSchoolClass: DateElectionTypeSchoolClass) {
+    return this.http.post('http://localhost:8080/rest/sv/deleteSchoolClassResult', dateElectionTypeSchoolClass);
   }
 
-  getFinishedClasses() {
-    return this.http.get('http://localhost:8080/rest/sv/getFinishedClasses');
+  newElection(dateElectionType: DateElectionType) {
+    return this.http.post<Status>('http://localhost:8080/rest/sv/createElection', dateElectionType);
+  }
+
+  getFinishedClasses(dateElectionType: DateElectionType) {
+    return this.http.post<SchoolClass[]>('http://localhost:8080/rest/sv/getFinishedClasses', dateElectionType);
   }
 
   /*
@@ -125,13 +134,17 @@ export class HttpService {
   createCandidate(candidate: User2) {
     return this.http.post('http://localhost:8080/rest/sv/createCandidate', candidate);
   }
-
-  getCurrentVoteDate() {
-    return this.http.get('http://localhost:8080/rest/sv/getCurrentVoteDate');
-  }
-
+*/
+/*
   createCandidature(candidateplus: User3) {
     return this.http.post('http://localhost:8080/rest/sv/createCandidature', candidateplus);
   }
    */
+  endElection(dateElectionType: DateElectionType) {
+    return this.http.post<Status>('http://localhost:8080/rest/sv/endElection', dateElectionType);
+  }
+
+  getSchoolClasses() {
+    return this.http.get<Array<string>>('http://localhost:8080/rest/sv/getSchoolClasses');
+  }
 }

@@ -55,9 +55,9 @@ export class ChooseClassComponent implements OnInit {
   loadClass(resClasses: Array<Candidature>) {
     console.log(resClasses);
     resClasses.forEach(item => {
-      console.log(item.schoolclass.name);
+      console.log(item.schoolClass.name);
 
-      this.classes[this.countV] = item.schoolclass.name;
+      this.classes[this.countV] = item.schoolClass.name;
       this.countV++;
     });
   }

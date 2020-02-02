@@ -2,7 +2,6 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {HttpService} from '../../../_services/http.service';
 import {DataService} from '../../../_services/data.service';
 import {Candidate, Election, Candidature} from '../../../_entities/entities';
-import {Electiontype, Electionstate, Department} from '../../../_enums/enums';
 
 @Component({
   selector: 'updateCandidates',
