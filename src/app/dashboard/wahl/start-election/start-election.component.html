@@ -1,0 +1,10 @@
+<div>
+  <div mat-dialog-content>
+    {{election.electionType}}    {{election.currentDate}}
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button (click)="onClick('start')" [mat-dialog-close]="election" cdkFocusInitial *ngIf="election.electionState == 'NEW' ">Start</button>
+    <button mat-button (click)="onClick('stop')" [mat-dialog-close]="election" cdkFocusInitial *ngIf="election.electionState == 'RUNNING' ">Stop</button>
+  </div>
+</div>

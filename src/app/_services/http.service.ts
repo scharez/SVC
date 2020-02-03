@@ -20,7 +20,7 @@ export class HttpService {
     getElections() {
         return this.http.get<Election[]>('http://localhost:8080/rest/sv/getElections');
     }
-    getSchoolClass(dateElectionType: DateElectionType) {
+  getVotingClasses(dateElectionType: DateElectionType) {
       return this.http.post<SchoolClass[]>('http://localhost:8080/rest/sv/getVotingClasses', dateElectionType);
     }
     getCandidates(): any {

@@ -65,6 +65,8 @@ export class ElectionComponent implements OnInit, AfterViewInit {
   savePointsS: SavePoints[] = [];
   savePointsA: SavePoints[] = [];
 
+  abteilungssprecher: string = '';
+  date: string;
 
   constructor(httpService: HttpService, dialog: MatDialog, private dataService: DataService, router: Router, private route: ActivatedRoute) {
     this.router = router;
@@ -92,7 +94,6 @@ export class ElectionComponent implements OnInit, AfterViewInit {
 
     for (let i = 0; i < this.candidatesS.length; i++) {
 
-      alert(this.candidatesS[i].username);
       console.log(this.candidatesS[i].username)
       this.punkteS.push(new Punkte(this.candidatesS[i].username, 0, 0));
     }
@@ -108,26 +109,34 @@ export class ElectionComponent implements OnInit, AfterViewInit {
     res.forEach(item => {
       console.log(item.election.electionType);
       console.log(item.candidate.username);
-      switch(item.election.electionType){
-        case (Electiontype.SCHULSPRECHER):
-          this.candidatesS[this.countS] = {'id': this.countS,'firstname': item.candidate.firstname, 'lastname': item.candidate.lastname, 'username': item.candidate.username};
-          this.countS++;
-          this.schoolClassResultDTOsS.push(new SchoolClassResultDTO(item.candidate.username, this.myClass, '20/01/2020', 0, 0));
-        case(Electiontype.ABTEILUNGSSPRECHER):
-          this.candidatesA[this.countA] = {'id': this.countA,'firstname': item.candidate.firstname, 'lastname': item.candidate.lastname, 'username': item.candidate.username};
+      if(item.election.electionType === "SCHULSPRECHER") {
+        this.candidatesS[this.countS] = {
+          'id': this.countS,
+          'firstname': item.candidate.firstname,
+          'lastname': item.candidate.lastname,
+          'username': item.candidate.username
+        };
+        this.countS++;
+        this.schoolClassResultDTOsS.push(new SchoolClassResultDTO(item.candidate.username, this.myClass, this.date, 0, 0));
+      } else {
+        if(this.abteilungssprecher === item.election.electionType) {
+          this.candidatesA[this.countA] = {
+            'id': this.countA,
+            'firstname': item.candidate.firstname,
+            'lastname': item.candidate.lastname,
+            'username': item.candidate.username
+          };
           this.countA++;
-          this.schoolClassResultDTOsA.push(new SchoolClassResultDTO(item.candidate.username, this.myClass, '20/01/2020', 0, 0));
-        default:
-          this.candidatesS[this.countS] = {'id': this.countS,'firstname': item.candidate.firstname, 'lastname': item.candidate.lastname, 'username': item.candidate.username};
-          this.countS++;
-          this.schoolClassResultDTOsS.push(new SchoolClassResultDTO(item.candidate.username, this.myClass, '20/01/2020', 0, 0));
+          this.schoolClassResultDTOsA.push(new SchoolClassResultDTO(item.candidate.username, this.myClass, this.date, 0, 0));
+        }
+
       }
     });
 
     this.pseudoInit();
 
     /*Kartenhöhe*/
-    this.laenge = this.candidatesS.length + this.candidatesA.length;
+    this.laenge = this.schoolClassResultDTOsS.length + this.schoolClassResultDTOsA.length;
     this.height = this.laenge * 10.5 + 'em';
   }
 
@@ -144,7 +153,16 @@ export class ElectionComponent implements OnInit, AfterViewInit {
       console.log('The dialog was closed');
       this.myClass = dialogRef.componentInstance.sClass;
       if(this.myClass !== ''){
-        alert(this.myClass);
+        if(this.myClass.endsWith('M') || this.myClass.endsWith('F')){
+          this.abteilungssprecher = 'ABTEILUNGSLEITERI';
+        } else {
+          this.abteilungssprecher = 'ABTEILUNGSLEITERE';
+        }
+        this.httpService.getElections().subscribe(res => {
+          res.forEach(res1 => {
+            this.date = res1.currentDate;
+          })
+        })
         this.httpService.getCandidatures().subscribe((res) => this.putCandidature(res));
       } else {
         this.onChooseClass();
@@ -259,12 +277,15 @@ export class ElectionComponent implements OnInit, AfterViewInit {
       });
     });
 
-    /*this.schoolClassResultDTOsA.forEach((value, index) => {
-      this.httpService.createSchoolClassResult(value);
-    });*/
+    this.schoolClassResultDTOsA.forEach((value, index) => {
+      this.httpService.createSchoolClassResult(value).subscribe( (res) => {
+        console.log(res);
+      });
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.router.navigate(['login']);
     });
   }
 
@@ -277,7 +298,7 @@ export class ElectionComponent implements OnInit, AfterViewInit {
 
     for (let a = 0; a < this.punkteA.length; a++) {
       this.punkteA[a].score = 0;
-      this.seletedValueOfRow[a] = 0;
+      this.seletedValueOfRowAb[a] = 0;
     }
 
   }

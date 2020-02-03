@@ -21,15 +21,20 @@ export class WahlComponent implements OnInit {
   httpService: HttpService;
   datepipe: DatePipe;
   router: Router;
+  dataService: DataService;
 
-  constructor(httpService: HttpService, datePipe: DatePipe, dialog: MatDialog, router: Router) {
+  constructor(httpService: HttpService, datePipe: DatePipe, dialog: MatDialog, router: Router, dataService: DataService) {
     this.httpService = httpService;
     this.datepipe = datePipe;
     this.dialog = dialog;
     this.router = router;
+    this.dataService = dataService;
   }
 
   date: Date = null;
+  dateString: string = '';
+  fixeddate: boolean = false;
+  fixdate = '';
 
   eletiontypes = ['SCHULSPRECHER', 'ABTEILUNGSLEITERE', 'ABTEILUNGSLEITERI'];
   eletiontype: string = '';
@@ -49,6 +54,9 @@ export class WahlComponent implements OnInit {
             if (index !== -1) {
               this.eletiontypes.splice(index, 1);
             }
+            this.date = new Date(Date.parse(value.currentDate));
+            this.fixdate = value.currentDate;
+            this.fixeddate = true;
           }
         });
         console.log(this.eletiontypes);
@@ -58,15 +66,15 @@ export class WahlComponent implements OnInit {
 
   newElection() {
 
-    if(this.eletiontype !== '' && this.date !== null){
+    this.dateString = this.datepipe.transform(this.date, 'MM/dd/yyyy');
+    if(this.eletiontype !== '' && this.dateString !== null){
 
       this.dateElectionType.electionType = this.eletiontype;
-      this.dateElectionType.date = this.datepipe.transform(this.date, 'dd/MM/yyyy');
-      alert(this.dateElectionType.date);
-
+      this.dateElectionType.date = this.datepipe.transform(this.date, 'MM/dd/yyyy');
       this.httpService.newElection(this.dateElectionType).subscribe(res => {
         console.log(res);
-        this.router.navigate(['reloader']);
+        this.dataService.date = this.dateElectionType.date;
+        this.router.navigate(['reloader'], { queryParams: { sitetocall: 'dashboard/wahl' } });
       });
     } else {
       alert('Please choose a date and the type of election')
@@ -77,7 +85,6 @@ export class WahlComponent implements OnInit {
     const dialogRef = this.dialog.open(StartElectionComponent, {
       width: '250px',
       data: {name: finalElection}
-    }).afterClosed();
-    this.router.navigate(['reloader']);
+    });
   }
 }

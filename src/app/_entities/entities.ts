@@ -14,7 +14,7 @@ export class Candidate {
 export class Election {
   constructor(
     public id?: number,
-    public currentDate?: string ,
+    public currentDate: string = '',
     public electionType: string = '',
     public electionState: string = '',
   ) {
@@ -25,7 +25,7 @@ export class SchoolClass {
   constructor(
     public id?: number,
     public name?: string,
-    public currentdate?: string,
+    public currentDate: string = '',
     public department: string = ''
   ) {
   }

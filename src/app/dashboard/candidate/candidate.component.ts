@@ -5,6 +5,8 @@ import {DataService} from '../../_services/data.service';
 import {log} from 'util';
 import {Candidate, Candidature, Election, SchoolClass, Schoolclassresult} from '../../_entities/entities';
 import {CandidatureDTO} from '../../_dtos/dtos';
+import {browser} from 'protractor';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-candidate',
@@ -25,6 +27,8 @@ export class CandidateComponent implements OnInit {
   medizintechnikClass: string[] = ['1AHBG', '2AHBG', '3AHBG', '4AHBG', '5AHBG'];
 
   httpService: HttpService;
+  dataService: DataService;
+  router: Router;
 
   /*Formular Daten*/
 
@@ -55,17 +59,24 @@ export class CandidateComponent implements OnInit {
   dataString = '';
 
 
-  constructor(private http: HttpClient, httpService: HttpService, private dataservice: DataService) {
+  constructor(private http: HttpClient, httpService: HttpService, private dataservice: DataService, router: Router) {
     this.httpService = httpService;
+    this.dataService = dataservice;
+    this.router = router;
     this.updateCandidate.candidate = new Candidate();
     this.updateCandidate.schoolClass = new SchoolClass();
     this.updateCandidate.election = new Election();
-
   }
 
   ngOnInit() {
     this.classes = [];
     this.allclasses = [];
+    this.httpService.getElections().subscribe(res => {
+      res.forEach(value => {
+        this.date = value.currentDate;
+      });
+      this.dataService.date = this.date;
+    });
     this.httpService.getSchoolClasses().subscribe(res => {
       console.log(res);
       res.forEach((value, index) => {
@@ -108,7 +119,7 @@ export class CandidateComponent implements OnInit {
         this.sDepartment = 'MEDIZINTECHNIK';
         this.getWishedClasses('G');
       } else {
-        alert('wtf');
+        alert('Error');
       }
     } else {
       if (this.sDepartment === 'MEDIENTECHNIK') {
@@ -120,7 +131,7 @@ export class CandidateComponent implements OnInit {
       } else if (this.sDepartment === 'MEDIZINTECHNIK') {
         this.getWishedClasses('G');
       } else {
-        alert('wtf');
+        alert('Error');
       }
     }
 
@@ -164,7 +175,7 @@ export class CandidateComponent implements OnInit {
       this.updateCandidate.schoolClass.department = this.sDepartment;
       this.updateCandidate.electionpromise = this.sWahlversprechen;
       this.updateCandidate.candidate.username = this.sMatrikelNr;
-      this.updateCandidate.election.currentDate = '20/01/2020';
+      this.updateCandidate.election.currentDate = this.date;
 
       console.log(this.updateCandidate);
 
@@ -187,6 +198,8 @@ export class CandidateComponent implements OnInit {
           console.log(res2.status);
           if (res2.status === 'Failed to create Candidature.') {
             alert('There is no Election, for this position, started yet.');
+          } else {
+            this.router.navigate(['reloader'], { queryParams: { sitetocall: 'dashboard/candidates' } });
           }
         });
       } else {

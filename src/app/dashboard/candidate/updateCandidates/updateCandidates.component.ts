@@ -16,15 +16,7 @@ export class UpdateCandidatesComponent implements OnInit {
   lol: Candidate = new Candidate(0, 'if160189', 'Lisa', 'Berger');
 
 
-  candidates: Candidature[] = [{
-    'id': 1,
-    'candidate': {'id': 1, 'username': 'if160189', 'firstname': 'Lisa', 'lastname': 'Berger'},
-    // @ts-ignore
-    'election': {'id': 1, 'currentdate': '2019/20', 'electiontype': 'SCHULSPRECHER', 'electionstate': 'RUNNING'},
-    // @ts-ignore
-    'schoolclass': {'id': 1, 'name': '4AHEL', 'currentdate': '2019/20', 'department': 'ELEKTRONIK'},
-    'electionpromise': 'ICh bin gut!'
-  }];
+  candidates: Candidature[] = [];
   // candidates: Canidature[] = [];
   count = 0;
 
@@ -44,9 +36,14 @@ export class UpdateCandidatesComponent implements OnInit {
 
   setCandidatures(res) {
     res.forEach(item => {
-      console.log('looooooooool');
       console.log(item);
-      this.candidates.push(item);
+      console.log(this.dataservice.date + ' hey there');
+      console.log(item.election.currentDate);
+      if (this.dataservice.date === item.election.currentDate) {
+        console.log('looooooooool');
+        console.log(item);
+        this.candidates.push(item);
+      }
     });
     console.log(this.candidates);
   }

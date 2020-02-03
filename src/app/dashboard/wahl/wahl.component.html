@@ -1,12 +1,15 @@
 <mat-card class="mat-card">
   <mat-card-actions>
     <br>
-    <div>
+    <div *ngIf="!fixeddate">
       <mat-form-field>
         <input matInput [matDatepicker]="picker" [(ngModel)]="this.date" placeholder="Choose a date">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+    </div>
+    <div *ngIf="fixeddate">
+      {{fixdate}}
     </div>
     <div>
       <mat-form-field class="alignData">
@@ -29,7 +32,7 @@
 <mat-card>
   <div>
     <div *ngFor="let election of elections">
-      <mat-option (click) ="selectedElection(election)">{{election.electionType}}    {{election.currentDate}}   {{election.electionState}}</mat-option>
+      <mat-option (click) ="selectedElection(election)">{{election.electionType}}    {{election.currentDate}}</mat-option>
     </div>
   </div>
 </mat-card>

@@ -16,17 +16,25 @@ export class ChooseClassComponent implements OnInit {
   constructor(
     private httpService: HttpService,
     private router: Router,
-    public dialogRef: MatDialogRef<ChooseClassComponent>,) {
+    public dialogRef: MatDialogRef<ChooseClassComponent>) {
   }
 
   sClass = '';
   classes: string[] = [];
+  date: string;
 
-  dateElectionType: DateElectionType
+  dateElectionType: DateElectionType;
 
   ngOnInit(): void {
-    this.dateElectionType = new DateElectionType('20/01/2020', 'SCHULSPRECHER');
-    this.httpService.getSchoolClass(this.dateElectionType).subscribe(result => {
+    this.httpService.getElections().subscribe(res => {
+      console.log(res[0].currentDate);
+      res.forEach(value => {
+        this.date = value.currentDate;
+      });
+    });
+    console.log(this.date);
+    this.dateElectionType = new DateElectionType(this.date, 'SCHULSPRECHER');
+    this.httpService.getVotingClasses(this.dateElectionType).subscribe(result => {
       console.log(result);
 
       result.forEach((value, index) => {

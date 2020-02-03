@@ -10,5 +10,6 @@ export class DataService {
 
   public candidateEmitter: EventEmitter<Candidature> = new EventEmitter();
   public candidature: Candidature;
+  public date: string;
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {HttpService} from '../../../_services/http.service';
-import {DateElectionType} from '../../../_entities/entities';
+import {DateElectionType, DateElectionTypeSchoolClass, SchoolClass} from '../../../_entities/entities';
 
 @Component({
   selector: 'app-elected-classes',
@@ -15,22 +15,33 @@ export class ElectedClassesComponent implements OnInit {
   /* Pop-Up Window*/
   dialog: MatDialog;
   myClass: string;
+  date: string;
 
   dateElectionType: DateElectionType;
+
+  schoolClass: SchoolClass;
+
+  dateElectionTypeSchoolClass: DateElectionTypeSchoolClass;
 
   constructor(dialog: MatDialog, private httpService: HttpService, private snackBar: MatSnackBar) {
     this.dialog = dialog;
   }
 
   ngOnInit() {
-    this.dateElectionType = new DateElectionType('20/01/2020', 'SCHULSPRECHER');
+    this.httpService.getElections().subscribe(res => {
+      res.forEach(value => {
+        this.date = value.currentDate;
+      });
+    });
+    this.dateElectionType = new DateElectionType(this.date, 'SCHULSPRECHER');
     this.httpService.getFinishedClasses(this.dateElectionType).subscribe((classesjson) => this.further(classesjson));
   }
 
   further(classesjson) {
+    console.log(classesjson);
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < classesjson.length; i++) {
-      this.classes.push(classesjson[i].);
+      this.classes.push(classesjson[i]);
     }
 
   }
@@ -41,8 +52,10 @@ export class ElectedClassesComponent implements OnInit {
 
   choosenClass(getClass: string) {
 
-    this.httpService.deleteClass(getClass).subscribe((resClass) => {
-      this.openSnackBar("This Class was deleted", "ok");
+    this.dateElectionTypeSchoolClass.date = '20/01/2020';
+    this.dateElectionTypeSchoolClass.schoolClassName = getClass;
+    this.httpService.deleteSchoolClassResult(this.dateElectionTypeSchoolClass).subscribe((resClass) => {
+      this.openSnackBar('This Class was deleted', 'ok');
     });
   }
 
